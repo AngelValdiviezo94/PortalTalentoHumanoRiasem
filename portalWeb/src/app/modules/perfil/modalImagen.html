@@ -1,0 +1,73 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<div class="modal-body">
+  <div class="content">
+    <div class="main-content-label mg-b-5">
+      Selecciona o toma una foto
+    </div>
+    <div class="profile-tab tab-menu-heading border-bottom-0">
+      <nav ngbNav #nav="ngbNav" class="main-nav-line p-0 tabs-menu profile-nav-line border-0 br-5 mb-0">
+        <ng-container ngbNavItem>
+          <a ngbNavLink class="mb-2 mt-2">Tomar foto</a>
+          <ng-template ngbNavContent>
+            <div class="main-content-body tab-pane border-top-0">
+              <div class="card">
+                <div class="card-body border-0 text-center justify-content-center align-content-center">
+                  <div class="wrapper">
+                    <webcam [height]="320" [width]="240" [trigger]="triggerObservable"
+                      (imageCapture)="handleImage($event)" *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch"
+                      [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" [imageQuality]="1"
+                      (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)"></webcam>
+                  </div>
+                  <button class="btn btn-primary text-center m-2" (click)="triggerSnapshot();" [disabled]="error"><i
+                      class="fas fa-camera"></i></button>
+                </div>
+              </div>
+              <div class="wrapper">
+                <image-cropper *ngIf="imagenAdjunta" [imageBase64]="imagenAdjunta" [maintainAspectRatio]="true"
+                  [aspectRatio]="3 / 3" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                  (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+              </div>
+              <div class="">
+                <img [src]="croppedImage" />
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+        <ng-container ngbNavItem>
+          <a ngbNavLink class="mb-2 mt-2">Seleccionar foto</a>
+          <ng-template ngbNavContent>
+            <div class="main-content-body tab-pane border-top-0">
+              <div class="card">
+                <div class="card-body border-0">
+                  <input class="btn m-2" type="file" (change)="fileChangeEvent($event)" />
+                  <div class="wrapper">
+                    <image-cropper *ngIf="imagenAdjunta" [imageBase64]="imagenAdjunta" [maintainAspectRatio]="true"
+                      [aspectRatio]="3 / 3" format="png" (imageCropped)="imageCropped($event)"
+                      (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                      (loadImageFailed)="loadImageFailed()"></image-cropper>
+                  </div>
+                  <div class="wrapper">
+                    <img [src]="croppedImage" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </nav>
+    </div>
+
+    <div class="row row-sm">
+      <div class="col-lg-12 col-md-12">
+        <div class="custom-card main-content-body-profile">
+          <div [ngbNavOutlet]="nav">
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary m-3 pull-right" (click)="confirmarImagen()" [disabled]="!imagenvalida">Confirmar</button>
+  </div>
+
+</div>

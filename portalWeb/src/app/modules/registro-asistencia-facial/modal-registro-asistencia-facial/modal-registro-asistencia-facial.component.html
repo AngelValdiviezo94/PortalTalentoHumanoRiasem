@@ -1,0 +1,7 @@
+<div>
+    <div class="text-center">
+        <webcam [width]="450" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+            (initError)="handleInitError($event)" [imageQuality]="1" [videoOptions]="videoOptions"
+            [allowCameraSwitch]="allowCameraSwitch"></webcam>
+    </div>
+</div>

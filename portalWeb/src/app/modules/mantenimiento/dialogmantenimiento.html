@@ -1,0 +1,108 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<div class="dialog-body">
+  <div class="row text-center">
+    <div class="col-sm-4">
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>COLABORADOR</mat-label>
+        <input type="text" matInput [value]="data.colaborador" [readonly]="true">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>CARGO</mat-label>
+        <input type="text" matInput [value]="data.cargo" [readonly]="true">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>CELULAR</mat-label>
+        <input type="text" matInput [value]="data.celular" [readonly]="true">
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>UDN</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboUdn" [matAutocomplete]="auto" [readonly]="true">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredUdn | async" [value]="option.descripcion"
+            (onSelectionChange)="onSelectionUdn(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>CEDULA</mat-label>
+        <input type="text" matInput [value]="data.cedula" [readonly]="true">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>DIRECCIÓN</mat-label>
+        <input type="text" matInput [value]="data.direccion" [readonly]="true">
+      </mat-form-field>
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>CORREO</mat-label>
+        <input type="text" matInput [value]="data.correo" [readonly]="true">
+      </mat-form-field>
+
+      <div class="form-group">
+        <ng-select [items]="lsLocalidad" [multiple]="true" bindLabel="descripcion" groupBy="selectedAllGroup"
+          [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="id"
+          [formControl]="ctrlLocalidad" (change)="changeSelectCola($event)">
+          <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
+            Todas
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+              [ngModelOptions]="{standalone: true}" />
+            {{item.descripcion}}
+          </ng-template>
+        </ng-select>
+      </div>
+
+      <!-- <mat-form-field appearance="outline" color="warn">
+          <mat-label>LOCALIDAD</mat-label>
+          <input type="text" matInput [formControl]="ctrlLocalidad" [matAutocomplete]="auto2">
+          <mat-autocomplete #auto2="matAutocomplete">
+              <mat-option *ngFor="let option of filteredLoc | async" [value]="option.descripcion"
+                  (onSelectionChange)="onSelectionLoc(option, $event)">
+                  {{option.descripcion}}
+              </mat-option>
+          </mat-autocomplete>
+      </mat-form-field> -->
+
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>LOCALIDAD PRINCIPAL</mat-label>
+        <input type="text" matInput [formControl]="ctrlLocalidadP" [matAutocomplete]="auto4">
+        <mat-autocomplete #auto4="matAutocomplete">
+          <mat-option *ngFor="let option of filteredLocP | async" [value]="option.descripcion"
+            (onSelectionChange)="onSelectionLocP(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>JEFE INMEDIATO</mat-label>
+        <input type="text" matInput [formControl]="ctrlJefe" [matAutocomplete]="auto3">
+        <mat-autocomplete #auto3="matAutocomplete">
+          <mat-option *ngFor="let option of filteredJef | async" [value]="option.colaborador"
+            (onSelectionChange)="onSelectionJef(option, $event)">
+            {{option.colaborador}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>REEMPLAZO INMEDIATO</mat-label>
+        <input type="text" matInput [formControl]="ctrlReemplazo" [matAutocomplete]="auto5">
+        <mat-autocomplete #auto5="matAutocomplete">
+          <mat-option *ngFor="let option of filteredRem | async" [value]="option.colaborador"
+            (onSelectionChange)="onSelectionRem(option, $event)">
+            {{option.colaborador}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <button class="btn btn-primary" (click)="actualizarColaborador()" [mat-dialog-close]="true">
+    Guardar Cambios
+  </button>
+</div>

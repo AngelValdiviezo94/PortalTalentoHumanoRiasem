@@ -1,0 +1,113 @@
+<button [disabled]="procesando" type="button" class="close" (click)="closeModal()">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h2 mat-dialog-title class="titleModalColaborador">Archivo de turnos</h2>
+<mat-divider></mat-divider>
+<br>
+<mat-dialog-content class="mat-typography">
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>UDN</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboUdn" [matAutocomplete]="auto">
+                <button *ngIf="!isControlEmpty('UDN')" (click)="limpiarControl('UDN')" mat-icon-button matSuffix>
+                    <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                    <mat-option *ngFor="let option of filteredUdn | async" [value]="option"
+                        (onSelectionChange)="onSelectionUdn(option, $event)">
+                        {{option.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+                <ng-container class="invalid" *ngIf="ctrlComboUdn.hasError('required') && ctrlComboUdn?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>ÁREA</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboArea" [matAutocomplete]="auto1">
+                <button *ngIf="!isControlEmpty('ARE')" (click)="limpiarControl('ARE')" mat-icon-button matSuffix>
+                    <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                    <mat-option *ngFor="let option of filteredArea | async" [value]="option"
+                        (onSelectionChange)="onSelectionArea(option, $event)">
+                        {{option.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+                <!-- <ng-container class="invalid" *ngIf="ctrlComboArea.hasError('required') && ctrlComboArea?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>SUBCENTRO COSTO</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboScc" [matAutocomplete]="auto2">
+                <button *ngIf="!isControlEmpty('SCC')" (click)="limpiarControl('SCC')" mat-icon-button matSuffix>
+                    <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                    <mat-option *ngFor="let option of filteredScc | async" [value]="option"
+                        (onSelectionChange)="onSelectionScc(option)">
+                        {{option.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+                <!-- <ng-container class="invalid" *ngIf="ctrlComboScc.hasError('required') && ctrlComboScc?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container> -->
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <mat-form-field appearance="fill" color="warn">
+                    <mat-label>DESDE</mat-label>
+                    <input matInput [matDatepicker]="picker" [formControl]="ctrlFechaDesde">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <ng-container class="invalid"
+                        *ngIf="ctrlFechaDesde.hasError('required') && ctrlFechaDesde?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <mat-form-field appearance="fill" color="warn">
+                    <mat-label>HASTA</mat-label>
+                    <input matInput [matDatepicker]="picker1" [formControl]="ctrlFechaHasta">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <ng-container class="invalid"
+                        *ngIf="ctrlFechaHasta.hasError('required') && ctrlFechaHasta?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <!-- </div> -->
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <!-- <button mat-button mat-dialog-close>Cerrar</button> -->
+    <button [disabled]="procesando" type="button" style="width: 160px;" class="btn btn-light mx-2"
+        (click)="closeModal()">
+        Cerrar
+    </button>
+    <!-- <button mat-button (click)="GenerarArchivo()" cdkFocusInitial>Generar</button> -->
+    <div *ngIf="!procesando">
+        <button type="button" class="btn btn-primary" style="width: 160px;" (click)="GenerarArchivo()">
+            Generar
+        </button>
+    </div>
+    <div *ngIf="procesando" class="btn-animation">
+        <button type="button" style="width: 160px;" class="btn btn-primary btn-spiner ms-2">
+            <span class="loading">
+                Procesando
+            </span>
+        </button>
+    </div>
+</mat-dialog-actions>

@@ -1,0 +1,20 @@
+.color-palabra-reencorr {
+    color: #FE5A00;
+}
+
+.subtitulo-reencorr {
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #FE5A00;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #f7a97f;
+}
+
+.button-width-ini {
+    width: 200px;
+}

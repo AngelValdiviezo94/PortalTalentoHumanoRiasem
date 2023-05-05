@@ -1,0 +1,25 @@
+<div class="col-md-12 detalleSolictud row dialog-body">
+  <div class="example-element-detail">
+    <div class="descripcion">
+      <li *ngFor="let nov of data">
+        <div class="row">
+          <div class="col-4">
+            <div class="campo">
+              <b>Código novedad: </b>{{nov.estadoMarcacion}}
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="campo">
+              <b>Descripción novedad: </b>{{nov.descripcion}}
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="campo">
+              <b>Registro novedad: </b>{{nov.fechaAprobacion | date : 'dd-MM-yyyy HH:mm'}}
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>

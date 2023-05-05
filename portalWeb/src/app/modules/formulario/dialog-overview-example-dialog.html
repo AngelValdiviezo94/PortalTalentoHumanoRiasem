@@ -1,0 +1,10 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+
+<body>
+  <input type="text" id="pac-input" class="controls" placeholder="Buscar lugar" #search>
+  <div class="full" id="map" #map></div>
+</body>
+
+<button class="btn btn-primary mt-2 pull-right" (click)="confirmarUbicacion()">Confirmar</button>

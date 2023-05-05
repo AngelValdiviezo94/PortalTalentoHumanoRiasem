@@ -1,0 +1,81 @@
+h1 {
+  font-size: calc(2vw + 1vh) !important;
+  font-weight: 600;
+}
+.new-button {
+  position: relative;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  width: 20vw;
+  height: 35vh;
+  font-weight: 500;
+  // font-size: calc(1vw + 1vh) !important;
+  // border: solid;
+  // border-width: 2px !important;
+  background-color: white;
+  // background-image: url("https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/LOGOENROLAPP_WEB.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: 50% 50%;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  padding: 0px !important;
+}
+
+@media (max-width: 768px) {
+  .new-button{
+    width: 45vw;
+    background-size: 30vw;
+  }
+  .header-menu{
+    font-size: 4vw !important;
+  }
+  .rowMenu{
+    width: 50%;
+    float: right;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.header-menu {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  font-size: 1.5vw;
+  line-height: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  // background-color: #00A89B;
+  color: white;
+}
+
+.footer-menu {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  // background-color: #8fb5b1;
+  color: white;
+  align-content: flex-end;
+}
+
+.btn:hover{-webkit-transform:scale(1.3);transform:scale(1.05);}

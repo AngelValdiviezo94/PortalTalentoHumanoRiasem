@@ -1,0 +1,54 @@
+<div *ngIf="!globalService?.isLoginPage" class="d-flex justify-content-end p-2">
+  <div *ngIf="globalService?.isAuthenticate" style="margin-right: auto; margin-left: 1%; align-self: center;">
+
+    <li ngbDropdown class="main-profile-menu nav nav-item nav-link ps-lg-2">
+      <a class="new nav-link profile-user d-flex" href="javascript:;" ngbDropdownToggle><img alt=""
+          [src]="gestionService.obtenerImagenPerfil()"></a>
+      <div ngbDropdownMenu>
+        <div class="menu-header-content p-3 border-bottom">
+          <div class="d-flex wd-100p">
+            <div class="main-img-user"><img alt="" [src]="gestionService.obtenerImagenPerfil()" class=""></div>
+            <div class="ms-3 my-auto">
+              <h6 class="tx-15 font-weight-semibold mb-0">{{usuario}}</h6><span
+                class="dropdown-title-text subtext op-6  tx-12">{{cargo}}</span>
+            </div>
+          </div>
+        </div>
+        <a ngbDropdownItem routerLink="/perfil"><i class="far fa-user-circle"></i>Perfil</a>
+        <a ngbDropdownItem routerLink="/cambiocontrasena"><i class="fas fa-key"></i> Cambiar contraseña</a>
+        <!-- <a ngbDropdownItem routerLink="/mail/read-mail"><i class="far fa-envelope "></i>Inbox</a> -->
+        <!-- <a ngbDropdownItem routerLink="/mail/mail"><i class="far fa-comment-dots"></i>Messages</a> -->
+        <!-- <a ngbDropdownItem routerLink="/mail/mail-settings"><i class="far fa-sun"></i> Settings</a> -->
+        <a ngbDropdownItem (click)="cerrarSesion()" style="cursor: pointer;"><i
+            class="far fa-arrow-alt-circle-left"></i>Cerrar sesión</a>
+      </div>
+    </li>
+    <!-- <h6 class="tx-15 font-weight-semibold mb-0">{{usuario}}</h6> -->
+  </div>
+  <div *ngIf="!globalService?.isHomePage">
+    <button class="btn btn-outline-primary m-1" type="button" (click)="home()">
+      <i class="fa fa-home" aria-hidden="true"></i>
+    </button>
+  </div>
+  <!-- <div *ngIf="globalService?.isAuthenticate">
+    <button class="btn btn-outline-primary m-1" type="button" (click)="cerrarSesion()">
+      Cerrar sesión
+    </button>
+  </div> -->
+</div>
+
+<router-outlet></router-outlet>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+<!-- Footer opened -->
+<footer>
+    <div class="row">
+      <div class="texto">
+        Copyright © 2023 <b class="text-primary">Enrolapp</b> Todos los derechos reservados
+      </div>
+        <div class="version">
+          Versión: {{version}}
+        </div>
+    </div>
+</footer>
+<!-- Footer closed -->

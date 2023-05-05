@@ -1,0 +1,103 @@
+<ng-template #modalContent let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title">Crear turno</h6>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-group" [formGroup]="formTurno">
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label" for="codigo">Código</label>
+                <input type="text" id="codigo" class="form-control" formControlName="codigo" placeholder="TUR01">
+                <ng-container class="invalid"
+                    *ngIf="formTurno.get('codigo')?.hasError('required') && formTurno.get('codigo')?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="descripcion">Descripción</label>
+                <input type="text" id="descripcion" class="form-control" formControlName="descripcion"
+                    placeholder="Jornada completa">
+                <ng-container class="invalid"
+                    *ngIf="formTurno.get('descripcion')?.hasError('required') && formTurno.get('descripcion')?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </div>
+            <div class="row row-sm mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            Entrada
+                        </div>
+                        <input class="form-control" mask="00:00" placeholder="08:00" formControlName="entrada" />
+                    </div>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('entrada')?.hasError('required') && formTurno.get('entrada')?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('entrada')?.hasError('pattern') && formTurno.get('entrada')?.touched">
+                        <small class="tx-danger">Hora no válida</small>
+                    </ng-container>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-text">
+                            Salida
+                        </div>
+                        <input class="form-control" mask="00:00" placeholder="17:00" formControlName="salida" />
+                    </div>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('salida')?.hasError('required') && formTurno.get('salida')?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('salida')?.hasError('pattern') && formTurno.get('salida')?.touched">
+                        <small class="tx-danger">Hora no válida</small>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="row row-sm mb-3">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-text" placement="top" ngbTooltip="Margen entrada">
+                            Margen E.
+                        </div>
+                        <input class="form-control" mask="00:00" placeholder="00:10" formControlName="margenEntrada" />
+                    </div>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('margenEntrada')?.hasError('required') && formTurno.get('margenEntrada')?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('margenEntrada')?.hasError('pattern') && formTurno.get('margenEntrada')?.touched">
+                        <small class="tx-danger">Hora no válida</small>
+                    </ng-container>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <div class="input-group-text" placement="top" ngbTooltip="Margen salida">
+                            Margen S.
+                        </div>
+                        <input class="form-control" mask="00:00" placeholder="00:05" formControlName="margenSalida" />
+                    </div>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('margenSalida')?.hasError('required') && formTurno.get('margenSalida')?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                    <ng-container class="invalid"
+                        *ngIf="formTurno.get('margenSalida')?.hasError('pattern') && formTurno.get('margenSalida')?.touched">
+                        <small class="tx-danger">Hora no válida</small>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer p-0">
+            <button class="btn ripple btn-primary" type="button">Guardar turno</button>
+            <button type="button" class="btn ripple btn-secondary"
+                (click)="closeModal()">Cancelar</button>
+        </div>
+    </form>
+</ng-template>

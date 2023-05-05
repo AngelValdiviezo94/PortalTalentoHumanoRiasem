@@ -1,0 +1,189 @@
+<div class="card" style="margin-bottom: 0;margin-top: 10px;">
+  <div class="card-body row col-md-12 col-lg-12 col-xl-12">
+    <div class="row col-md-12 col-lg-12 col-xl-12">
+      <div class="group-btn text-center">
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <div>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio21" checked value="1"
+              [(ngModel)]="codTipSolGen" (ngModelChange)="checkYo()">
+            <label class="btn btn-outline-primary" for="btnradio21" placement="top" ngbTooltip="Para ti">
+              <i class="fas fa-user"></i>
+            </label>
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio22" value="2" [(ngModel)]="codTipSolGen"
+              (ngModelChange)="checkOtro()">
+            <label class="btn btn-outline-primary" for="btnradio22" placement="top" ngbTooltip="Para un colaborador">
+              <i class="fas fa-group"></i>
+            </label>
+          </div>
+          <div style="width: 300px;">
+            <input style="width: 100%;" *ngIf="flagBeneficiario" class="form-control" placeholder="colaborador"
+              type="text" [formControl]="ctrlColaborador" readonly>
+            <ng-select *ngIf="!flagBeneficiario" placeholder="Selecciona un colaborador"
+              (change)="onSelectionColab($event)">
+              <ng-option *ngFor="let co of lsEmpleado" [value]="co">
+                {{co.apellidos + ' ' + co.nombres}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="flagBeneficiario || (!flagBeneficiario && lsEmpleado.length > 0)"
+      class="row col-md-12 col-lg-12 col-xl-12">
+      <div>
+        <h5 style="color: #FE5A00;">¿Necesitas solicitar horas extras?</h5>
+      </div>
+    </div>
+
+    <div *ngIf="flagBeneficiario" class="card-body col-md-12 col-lg-6 col-xl-6">
+      <div class="media-list pb-0">
+        <div class="media text-left">
+          <div class="col-md-6 col-lg-6 col-xl-6">
+            <h5>{{ cliente?.apellidos }} {{ cliente?.nombres }}</h5>
+          </div>
+
+          <div class="media-body col-md-16 col-lg-6 col-xl-6" style="line-height: 22px;">
+            <div>
+              <label> C.I </label>
+              <span class="tx-medium">
+                {{cliente?.identificacion}}
+              </span>
+            </div>
+            <div>
+              <!-- <label>Cargo: </label> -->
+              <span class="tx-medium">
+                {{ cliente?.cargo}}
+              </span>
+            </div>
+            <div>
+              <!-- <label>Empresa: </label> -->
+              <span class="tx-medium">
+                {{cliente?.empresa}}
+              </span>
+            </div>
+            <div>
+              <!-- <label>Área: </label> -->
+              <span class="tx-medium">
+                {{cliente?.area}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!flagBeneficiario && lsEmpleado.length > 0" class="card-body col-md-12 col-lg-6 col-xl-6">
+      <div class="media-list pb-0">
+        <div class="media text-left">
+          <div class="col-md-6 col-lg-6 col-xl-6">
+            <h5>{{ empleado?.apellidos }} {{ empleado?.nombres }}</h5>
+          </div>
+
+          <div class="media-body col-md-16 col-lg-6 col-xl-6" style="line-height: 22px;">
+            <div>
+              <label> C.I </label>
+              <span class="tx-medium">
+                {{empleado?.identificacion}}
+              </span>
+            </div>
+            <div>
+              <!-- <label>Cargo: </label> -->
+              <span class="tx-medium">
+                {{ empleado?.cargoPanacea}}
+              </span>
+            </div>
+            <div>
+              <!-- <label>Empresa: </label> -->
+              <span class="tx-medium">
+                {{empleado?.empresaPanacea}}
+              </span>
+            </div>
+            <div>
+              <!-- <label>Área: </label> -->
+              <span class="tx-medium">
+                {{empleado?.areaPanacea}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="flagBeneficiario || (!flagBeneficiario && lsEmpleado.length > 0)" class="col-md-12 col-lg-6 col-xl-6">
+      <br>
+
+      <div>
+        <mat-form-field appearance="outline" color="warn">
+          <textarea matInput class="form-control" maxlength="300" [formControl]="comentario"
+            placeholder="Ingresa un comentario" rows="2"></textarea>
+          <mat-hint align="end">{{comentario.value?.length}} / 300</mat-hint>
+        </mat-form-field>
+        <ng-container class="invalid" *ngIf="!comentario.valid">
+          <small class="tx-danger">Cantidad de caracteres excedido</small>
+        </ng-container>
+      </div>
+    </div>
+    <br>
+
+    <div *ngIf="flagBeneficiario || (!flagBeneficiario && lsEmpleado.length > 0)" class="card custom-card">
+      <div class="card-header d-flex custom-card-header border-bottom-0">
+        <h5 class="card-subtitle" style="color: #FE5A00;">
+          Selecciona el día y el rango de
+          horas que necesitas pedir extras
+        </h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="align-self: center;">
+            <div class="input-group">
+              <button (click)="a.toggle()" class="btn btn-outline-primary bi bi-calendar3" type="button">
+              </button>
+              <input class="form-control" (click)="a.toggle()" placeholder="dd/mm/aaaa" name="dp"
+                [(ngModel)]="fechaPermisoHora" ngbDatepicker #a="ngbDatepicker" [minDate]="minDatePermiso">
+            </div>
+            <ng-container class="invalid" *ngIf="!fechaPermisoHora && formPermisoTocuched">
+              <small class="tx-danger">Campo requerido</small>
+            </ng-container>
+          </div>
+          <div class="col-sm-12 col-md-3 col-lg-3 timePickerClass">
+            <ngb-timepicker [(ngModel)]="horaIni">
+            </ngb-timepicker>
+            <ng-container class="invalid" *ngIf="!horaIni && formPermisoTocuched">
+              <small class="tx-danger">Campo requerido</small>
+            </ng-container>
+          </div>
+          <div class="col-sm-12 col-md-3 col-lg-3 text-center" style="align-self: center;">
+            <div class="input-group">
+              <button (click)="b.toggle()" class="btn btn-outline-primary bi bi-calendar3" type="button">
+              </button>
+              <input class="form-control" (click)="b.toggle()" placeholder="dd/mm/aaaa" name="dp"
+                [(ngModel)]="fechaPermisoHora2" ngbDatepicker #b="ngbDatepicker" [minDate]="minDatePermiso">
+            </div>
+            <ng-container class="invalid" *ngIf="!fechaPermisoHora && formPermisoTocuched">
+              <small class="tx-danger">Campo requerido</small>
+            </ng-container>
+          </div>
+          <div class="col-sm-12 col-md-3 col-lg-3 timePickerClass">
+            <ngb-timepicker [(ngModel)]="horaFin">
+            </ngb-timepicker>
+            <ng-container class="invalid" *ngIf="!horaFin && formPermisoTocuched">
+              <small class="tx-danger">Campo requerido</small>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="flagBeneficiario || (!flagBeneficiario && lsEmpleado.length > 0)" class="card-footer">
+    <button class="btn btn-primary" (click)="SunmitSolicitudPermiso()">
+      Registrar
+    </button>
+  </div>
+
+  <div *ngIf="!flagBeneficiario && lsEmpleado.length === 0" class="card" style="margin-bottom: 0;">
+    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <h5 style="color: #FE5A00;">No tienes colaboradores asignados.</h5>
+    </div>
+  </div>
+</div>

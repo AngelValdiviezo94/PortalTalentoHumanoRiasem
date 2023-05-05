@@ -1,0 +1,75 @@
+<div *ngIf="isCanalActive" class="">
+  <div class="">
+    <!-- // header -->
+    <!-- <app-toobar></app-toobar> -->
+    <!-- //sidebar -->
+  </div>
+
+  <div class="">
+
+    <div class="row justify-content-center text-center">
+      <!-- <div class="col-md-12 col-lg-12 col-xl-12 row justify-content-center text-center align-content-center"> -->
+        <div *ngFor="let op of opciones" class="rowMenu col-md-4 col-lg-4 col-xl-4">
+          <button class="btn mb-3" [routerLink]="op.ruta">
+            <div class=new-button [style.background-image]="'url('+op.imagen+')'">
+              <div class="header-menu" [style.background-color]="op.claseCss">{{op.titulo}}</div>
+              <div class="footer-menu" [style.background-color]="op.claseCss"></div>
+            </div>
+          </button>
+        </div>
+      <!-- </div> -->
+    </div>
+
+
+    <div class="row justify-content-center text-center">
+      <div class="col-md-12 col-lg-12 col-xl-12 row">
+        <!-- <div *ngFor="let op of opciones" class="mb-2 col-md-6 col-lg-6 col-xl-6">
+            <button type="button" [class]="op.claseCss" [routerLink]="op.ruta">
+              {{op.titulo}}
+            </button>
+          </div> -->
+        <!-- <div class="mb-2">
+            <button *ngIf="isFeatureEnrolamientoActive" type="button" class="btn btn-outline-success"
+              routerLink="/formulario">
+              Enrolamiento
+            </button>
+          </div>
+          <div *ngIf="isFeaTurnoActive" class="mb-2">
+            <button type="button" class="btn btn-outline-danger " routerLink="/turnos">
+              Turnos
+            </button>
+          </div> -->
+      </div>
+      <!-- <div class="col-sm">
+          <div *ngIf="isFeatureMarcacionActive" class="mb-2">
+            <button type="button" class="btn btn-outline-warning" routerLink="/marcacion">
+              Marcaciones / Registro
+            </button>
+          </div>
+          <div *ngIf="isFeatureTransferenciaInformacionActive" class="mb-2">
+            <button type="button" class="btn btn-outline-info" routerLink="/home">
+              Transferencia de Información
+            </button>
+          </div>
+          <div class="mb-2">
+            <button type="button" class="btn btn-outline-info" routerLink="/gestion-solicitud">
+              Gestión solicitudes
+            </button>
+            <div class="mb-2">
+              <button type="button" class="btn btn-outline-info" routerLink="/solicitudes">
+                Solicitudes
+              </button>
+          </div>
+        </div> -->
+    </div>
+  </div>
+  <!-- // contetnt  -->
+  <router-outlet>
+    <!-- <app-loader></app-loader> -->
+  </router-outlet>
+
+</div>
+<!-- right sidebar -->
+
+<!-- footer  -->
+<!-- <app-footer></app-footer> -->

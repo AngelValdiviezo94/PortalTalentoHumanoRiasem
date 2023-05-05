@@ -1,0 +1,97 @@
+<div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-bottom: 0; min-height: 70vh; margin-top: 30px;">
+  <div class="group-btn text-start">
+    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+      <div>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio21" checked value="1"
+          [(ngModel)]="codTipSolGen" (ngModelChange)="checkYo()">
+        <label class="btn btn-outline-primary" for="btnradio21" placement="top" ngbTooltip="Para ti">
+          <i class="fas fa-user"></i>
+        </label>
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio22" value="2" [(ngModel)]="codTipSolGen"
+          (ngModelChange)="checkOtro()">
+        <label class="btn btn-outline-primary" for="btnradio22" placement="top" ngbTooltip="Para un colaborador">
+          <i class="fas fa-group"></i>
+        </label>
+      </div>
+      <div style="width: 300px;">
+        <input style="width: 100%;" *ngIf="flagBeneficiario === true" class="form-control" placeholder="colaborador"
+          type="text" [formControl]="ctrlColaborador" readonly>
+        <ng-select *ngIf="flagBeneficiario === false" placeholder="Selecciona un colaborador"
+          (change)="onSelectionColab($event)" [loading]="loadingComboCola">
+          <ng-option *ngFor="let co of lsEmpleado" [value]="co">
+            {{co.apellidos + ' ' + co.nombres}}
+          </ng-option>
+        </ng-select>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="(flagBeneficiario && diasJustificar.length > 0) || 
+            (!flagBeneficiario && lsEmpleado.length > 0 && diasJustificar.length > 0)" class="card"
+    style="margin-bottom: 0;">
+    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <ng-select [items]="lstDiasJustificar | async" placeholder="Selecciona el día a justificar"
+          bindLabel="descripcionCombo" autofocus bindValue="marcacionId" [(ngModel)]="selectedIdMarcacion"
+          (change)="onSelectionDiasJustificar($event)">
+        </ng-select>
+        <ng-container class="invalid" *ngIf="!selectedIdMarcacion && formJustificacionTocuched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <ng-select [items]="lstTipoJustificacion | async" placeholder="Selecciona el mottivo para justificar"
+          bindLabel="descripcion" bindValue="id" [(ngModel)]="selectedIdTipoJustificacion">
+        </ng-select>
+        <ng-container class="invalid" *ngIf="!selectedIdTipoJustificacion && formJustificacionTocuched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <mat-form-field appearance="outline" color="warn">
+          <textarea matInput class="form-control" maxlength="300" [formControl]="comentario"
+            placeholder="Ingresa un comentario" rows="2"></textarea>
+          <mat-hint align="end">{{comentario.value?.length}} / 300</mat-hint>
+        </mat-form-field>
+        <ng-container class="invalid" *ngIf="comentario.errors?.['required'] && comentario.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+        <ng-container class="invalid" *ngIf="comentario.errors?.['maxlength']">
+          <small class="tx-danger">Cantidad de caracteres excedido</small>
+        </ng-container>
+      </div>
+
+      <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2 px-5">
+        <ngx-dropzone [accept]="'*'" [maxFileSize]="10485760" (change)="onSelect($event)">
+          <ngx-dropzone-label>Selecciona o arrastra archivos aquí</ngx-dropzone-label>
+          <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+          </ngx-dropzone-preview>
+        </ngx-dropzone>
+        <ng-container class="invalid" *ngIf="files?.length === 0 && formJustificacionTocuched">
+          <small class="tx-danger">Debes agregar al menos un elemento</small>
+        </ng-container>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" (click)="SunmitSolicitudJustificacion()">
+          Registrar
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="(flagBeneficiario && diasJustificar.length === 0) || 
+    (!flagBeneficiario && lsEmpleado.length > 0 && diasJustificar.length === 0)" class="card"
+    style="margin-bottom: 0;">
+    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <h5 style="color: #FE5A00;">¡Genial!, no tienes días que justificar.</h5>
+    </div>
+  </div>
+
+  <div *ngIf="!flagBeneficiario && lsEmpleado.length === 0" class="card" style="margin-bottom: 0;">
+    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+      <h5 style="color: #FE5A00;">No tienes colaboradores asignados.</h5>
+    </div>
+  </div>
+</div>

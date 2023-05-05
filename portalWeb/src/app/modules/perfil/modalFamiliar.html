@@ -1,0 +1,97 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<h1>Familiar</h1>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>NOMBRES</mat-label>
+        <input type="text" matInput [formControl]="ctrlNombres">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>APELLIDOS</mat-label>
+        <input type="text" matInput [formControl]="ctrlApellidos">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>CEDULA</mat-label>
+        <input type="text" matInput [formControl]="ctrlIdentificacion">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>TELÉFONO</mat-label>
+        <input type="text" matInput [formControl]="ctrlTelefono">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>CORREO</mat-label>
+        <input type="text" matInput [formControl]="ctrlCorreo">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>RELACIÓN FAMILIAR</mat-label>
+        <input type="text" matInput [formControl]="ctrlParentezco" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredParentezco | async" [value]="option.nombre"
+            (onSelectionChange)="onSelectionPar(option, $event)">
+            {{option.nombre}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>ALIAS</mat-label>
+        <input type="text" matInput [formControl]="ctrlAlias">
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>DESDE</mat-label>
+        <input matInput [matDatepicker]="picker" [formControl]="ctrlDesde" [min]="fechaDesdeIni" readonly>
+        <mat-datepicker-toggle color="warn" matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker color="warn"></mat-datepicker>
+        <!-- <ng-container class="invalid" *ngIf="desdecontrol.hasError('required') && desdecontrol?.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container> -->
+      </mat-form-field>
+    </div>
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>HASTA</mat-label>
+        <input matInput [matDatepicker]="picker1" [formControl]="ctrlHasta" [min]="fechaDesdeIni" readonly>
+        <mat-datepicker-toggle color="warn" matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1 color="warn"></mat-datepicker>
+        <!-- <ng-container class="invalid" *ngIf="desdecontrol.hasError('required') && desdecontrol?.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container> -->
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>CUPO</mat-label>
+        <input type="number" matInput [formControl]="ctrlCupo">
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<button *ngIf="data.accion=='N'" class="btn btn-primary pull-right" (click)="autorizarFamiliar()">
+  Guardar
+</button>
+<button *ngIf="data.accion=='E'" class="btn btn-primary pull-right" (click)="editarFamiliar()">
+  Guardar
+</button>

@@ -1,0 +1,31 @@
+// .pdf-body{
+//   height: 800px;
+//   width: 800px;
+//   border: 1px solid black;
+//   text-align: center;
+//   background-color: white;
+//   justify-content: center;
+//   align-items: center;
+//   display: flex;
+// }
+table.PerformanceTable {
+  table-layout: fixed;
+  width: 800px;
+  height: 800px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+table.PerformanceTable td.PerformanceCell {
+  width: 75px;
+}
+
+.p2 {
+  text-align: justify;
+  margin: 5%;
+  // width: 90%;
+}
+
+img{
+  width: 200px;
+}

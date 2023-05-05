@@ -1,0 +1,282 @@
+<div *ngIf="isAtrConsultarActive" class="p-1 m-2">
+  <div class="row">
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>UDN</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboUdn" [matAutocomplete]="auto">
+        <button *ngIf="!isControlEmpty('UDN')" (click)="limpiarControl('UDN')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarTextoCombo">
+          <mat-option *ngFor="let option of filteredUdn | async" [value]="option" [matTooltip]="option.descripcion"
+            matTooltipPosition="after" matTooltipShowDelay="1000" (onSelectionChange)="onSelectionUdn(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+        <ng-container class="invalid" *ngIf="ctrlComboUdn.hasError('required') && ctrlComboUdn?.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>ÁREA</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboArea" [matAutocomplete]="auto1">
+        <button *ngIf="!isControlEmpty('ARE')" (click)="limpiarControl('ARE')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="mostrarTextoCombo">
+          <mat-option *ngFor="let option of filteredArea | async" [value]="option" [matTooltip]="option.descripcion"
+            matTooltipPosition="after" matTooltipShowDelay="1000" (onSelectionChange)="onSelectionArea(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+        <ng-container class="invalid" *ngIf="ctrlComboArea.hasError('required') && ctrlComboArea?.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>SUBCENTRO COSTO</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboScc" [matAutocomplete]="auto2">
+        <button *ngIf="!isControlEmpty('SCC')" (click)="limpiarControl('SCC')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto2="matAutocomplete" [displayWith]="mostrarTextoCombo">
+          <mat-option *ngFor="let option of filteredScc | async" [value]="option" [matTooltip]="option.descripcion"
+            matTooltipPosition="after" matTooltipShowDelay="1000" (onSelectionChange)="onSelectionScc(option)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+        <ng-container class="invalid" *ngIf="ctrlComboScc.hasError('required') && ctrlComboScc?.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>COLABORADOR</mat-label>
+        <input type="text" placeholder="C.I. o Nombre" matInput [formControl]="ctrlColaborador" autocomplete="off">
+        <button *ngIf="!isControlEmpty('COL')" (click)="limpiarControl('COL')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <mat-form-field appearance="outline" color="warn">
+          <mat-label>DESDE</mat-label>
+          <input matInput [matDatepicker]="picker" [formControl]="ctrlFechaDesde">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <ng-container class="invalid" *ngIf="ctrlFechaDesde.hasError('required') && ctrlFechaDesde?.touched">
+            <small class="tx-danger">Campo requerido</small>
+          </ng-container>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <mat-form-field appearance="outline" color="warn">
+          <mat-label>HASTA</mat-label>
+          <input matInput [matDatepicker]="picker1" [formControl]="ctrlFechaHasta">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+          <ng-container class="invalid" *ngIf="ctrlFechaHasta.hasError('required') && ctrlFechaHasta?.touched">
+            <small class="tx-danger">Campo requerido</small>
+          </ng-container>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <button type="button" class="btn btn-primary" (keyup.enter)="buscarSolicitudes()" (click)="buscarSolicitudes()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <table mat-table [dataSource]="dataGrid" multiTemplateDataRows class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>
+        Acciones
+      </th>
+      <td mat-cell *matCellDef="let element row" (click)="$event.stopPropagation()">
+        <div *ngIf="esEstadoSolicitado(element.idEstadoSolicitud) === 'SOLICITADA'">
+          <button class="btn btn-success btn-sm mx-1" type="button" matTooltipPosition="above" matTooltip="Aprobar"
+            (click)="aprobarSolicitud(element); $event.stopPropagation()">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-danger btn-sm" type="button" matTooltipPosition="above" matTooltip="Rechazar"
+            (click)="rechazarSolicitud(element); $event.stopPropagation()">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="codigoFeature">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo solicitud </th>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+        {{ getNombreSolicitud(element.codigoFeature) }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="identificacionEmpleado">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificación</th>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+        {{element.identificacionEmpleado}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombreEmpleado">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Colaborador</th>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+        {{element.nombreEmpleado}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="idEstadoSolicitud">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+        {{ retornaEstadoSolicitud(element.idEstadoSolicitud)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaCreacion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha creación</th>
+      <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+        {{element.fechaCreacion | date: 'dd-MM-yyyy HH:mm:ss'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expand">
+      <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button aria-label="expand row"
+          (click)="(expandedElement = expandedElement === element ? null : element); detalleSolcitud(element); $event.stopPropagation()">
+          <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithExpand.length">
+        <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div *ngIf="element.codigoFeature === 'PER'">
+            <div class="col-md-12 detalleSolictud row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <li><b>Fecha desde: </b> {{solicitudPermiso?.fechaDesde | date: 'dd-MM-yyyy'}}</li>
+                <li><b>Fecha hasta: </b> {{solicitudPermiso?.fechaHasta | date: 'dd-MM-yyyy'}}</li>
+                <li><b>Hora inicio: </b> {{solicitudPermiso?.horaInicio}}</li>
+                <li><b>Hora fin: </b> {{solicitudPermiso?.horaFin}}</li>
+              </div>
+              <div class="col-md-5">
+                <li><b>Cantidad (horas):</b> {{solicitudPermiso?.cantidadHoras | date: 'HH:mm'}}
+                </li>
+                <li><b>Tipo permiso:</b> {{solicitudPermiso?.tipoPermiso}}</li>
+                <li><b>Observación:</b> {{solicitudPermiso?.observacion}}</li>
+                <li><b>Fecha creación:</b>
+                  {{solicitudPermiso?.fechaCreacion | date: 'dd-MM-yyyy HH:mm:ss'}}
+                </li>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+          <div *ngIf="element.codigoFeature === 'HEX'">
+            <div class="col-md-12 detalleSolictud row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <li><b>Fecha desde: </b> {{solicitudHorasExtras?.fechaDesde | date: 'dd-MM-yyyy'}}</li>
+                <li><b>Fecha hasta: </b> {{solicitudHorasExtras?.fechaHasta | date: 'dd-MM-yyyy'}}</li>
+                <li><b>Hora inicio: </b> {{solicitudHorasExtras?.horaInicio}}</li>
+                <li><b>Hora fin: </b> {{solicitudHorasExtras?.horaFin}}</li>
+              </div>
+              <div class="col-md-5">
+                <li><b>Observación:</b> {{solicitudHorasExtras?.comentarios}}</li>
+                <li><b>Fecha creación:</b>
+                  {{solicitudHorasExtras?.fechaCreacion | date: 'dd-MM-yyyy HH:mm:ss'}}
+                </li>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+
+          <div *ngIf="element.codigoFeature === 'VAC'">
+            <div class="col-md-12 detalleSolictud row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <li><b>Fecha desde: </b> {{solicitudVacacion?.fechaDesde | date: 'dd-MM-yyyy'}}</li>
+                <li><b>Fecha hasta: </b> {{solicitudVacacion?.fechaHasta | date: 'dd-MM-yyyy'}}</li>
+                <li><b>Cantidad (días):</b> {{solicitudVacacion?.cantidadDias}}
+                </li>
+              </div>
+              <div class="col-md-5">
+                <li><b>Observación:</b> {{solicitudVacacion?.observacion}}</li>
+                <li><b>Fecha creación:</b>
+                  {{solicitudVacacion?.fechaCreacion | date: 'dd-MM-yyyy HH:mm:ss'}}
+                </li>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+
+          <div *ngIf="element.codigoFeature === 'JUS'">
+            <div class="col-md-12 detalleSolictud row">
+              <div class="col-md-1"></div>
+              <div class="col-md-5">
+                <li><b>Afectación entrada: </b>
+                  {{solicitudJustificacion?.fechaMarcacionG | date: 'dd-MM-yyyy HH:mm:ss'}}</li>
+                <li><b>Afectación salida: </b>
+                  {{solicitudJustificacion?.fechaMarcacionG | date: 'dd-MM-yyyy HH:mm:ss'}}</li>
+                <li><b>Tipo justificación:</b> {{solicitudJustificacion?.tipoJustificacion}} </li>
+              </div>
+              <div class="col-md-5">
+                <li><b>Observación:</b> {{solicitudJustificacion?.comentarios}}</li>
+                <li><b>Fecha creación:</b>
+                  {{solicitudJustificacion?.fechaCreacion | date: 'dd-MM-yyyy HH:mm:ss'}}
+                </li>
+                <li class="row" style="margin-left: 2%;">
+                  <b>Adjuntos:</b>
+                  <div *ngFor="let ad of solicitudJustificacion?.docAdjunto" style="cursor: pointer;">
+                    <!-- <span *ngIf="GetUrlExtension(ad?.rutaAcceso) === 'pdf'">
+                                          <a href="data:application/pdf,https://imagenes.enrolapp.ec/{{ad?.rutaAcceso}}"
+                                              target="_blank" download="adjunto.pdf">
+                                              <i class="fa fa-file-pdf"></i>
+                                          </a>
+                                      </span> -->
+                    <span *ngIf="GetUrlExtension(ad?.rutaAcceso) === 'pdf'" (click)="VisualizarAdjunto(ad?.rutaAcceso)">
+                      <i class="fa fa-file-pdf"></i>
+                    </span>
+                    <span *ngIf="GetUrlExtension(ad?.rutaAcceso) !== 'pdf'" (click)="VisualizarAdjunto(ad?.rutaAcceso)">
+                      <i class="fa fa-file-image"></i>
+                    </span>
+                  </div>
+                </li>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithExpand; sticky: false"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithExpand;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="10">No se encontró información</td>
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" [pageSize]="pageSize" showFirstLastButtons
+    aria-label="Seleccionar página de registros">
+  </mat-paginator>
+</div>
+
+<!-- <button class="btn btn-primary" (click)="VisualizarAdjunto('')">abrir modal</button> -->
+<app-modal-archivo-adjunto-justificacion *ngIf="showModalVisualizarAdjunto">
+</app-modal-archivo-adjunto-justificacion>
+
+<!-- <a href="https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf" target="_blank" download="pkfpk.pdf">Adjunto</a> -->

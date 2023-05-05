@@ -1,0 +1,51 @@
+/* ini estilos date range picker */
+.dp-hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: #FE5A00;
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: #f89b69;
+}
+
+/* fin estilos date range picker */
+
+:host ::ng-deep .ng-dropdown-panel .scroll-host {
+  max-height: 180px;
+}
+
+/* Estilos select */
+:host ::ng-deep .ng-select.ng-select-single .ng-select-container {
+  height: 40px;
+  width: auto;
+}
+
+:host ::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  text-align: left;
+}
+
+.ng-value-container {
+  .ng-value {
+      white-space: normal !important;
+  }
+}

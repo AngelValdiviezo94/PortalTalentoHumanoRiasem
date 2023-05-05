@@ -1,0 +1,224 @@
+::ng-deep {
+  app-profile {
+    .profile-online {
+      bottom: 0;
+      top: auto;
+    }
+
+    .w-fitcont {
+      width: fit-content;
+    }
+  }
+}
+
+.modal-body {
+  max-height: 80vh;
+  max-width: 80vw;
+  // min-height: 40vh;
+  // min-width: 40vw;
+  overflow-y: auto;
+  overflow-x: auto;
+
+  height: 100%;
+  width: 100%;
+  // align-items: center;
+  // justify-content: center;
+  // text-align: center;
+}
+
+.body {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+image-cropper {
+  height: 50vh;
+}
+
+.close-button {
+  float: right;
+  top: -24px;
+  right: -24px;
+}
+
+.close-icon {
+  transition: 1s ease-in-out;
+}
+
+.close-icon:hover {
+  transform: rotate(180deg);
+}
+
+::ng-deep .icon-outside .close-button {
+  float: right;
+  top: -52px;
+  right: -52px;
+}
+
+::ng-deep .icon-outside .mat-dialog-container {
+  overflow: unset
+}
+
+.wrapper {
+  display: flex;
+  background: #383838;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  // inexplicable/unknown extra space is rendered, causing scrollbars to show up
+  overflow: hidden;
+  max-height: 80vh;
+}
+
+#map {
+  height: 60vh;
+  width: 50vw;
+  max-width: 800px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  background-color: #fff;
+  border: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+  margin: 10px;
+  padding: 0 0.5em;
+  font: 400 18px Roboto, Arial, sans-serif;
+  overflow: hidden;
+  font-family: Roboto;
+  padding: 0;
+}
+
+#pac-container {
+  padding-bottom: 12px;
+  margin-right: 12px;
+}
+
+.pac-controls {
+  display: inline-block;
+  padding: 5px 11px;
+}
+
+.pac-controls label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 400px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+#title {
+  color: #fff;
+  background-color: #4d90fe;
+  font-size: 25px;
+  font-weight: 500;
+  padding: 6px 12px;
+}
+
+#target {
+  width: 345px;
+}
+
+.cdk-overlay-container {
+  z-index: 999999 !important;
+}
+
+// .profile-image:hover{
+//   filter: opacity(.5);
+// }
+
+
+.flip-card {
+  background-color: transparent;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+  // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:focus {
+  outline: 0;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card:focus .flip-card-inner {
+  transform: rotateY(180deg);
+
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  /* HERE */
+}
+
+.flip-card-front {
+  background: transparent;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flip-card-back {
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  transform: rotateY(180deg);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

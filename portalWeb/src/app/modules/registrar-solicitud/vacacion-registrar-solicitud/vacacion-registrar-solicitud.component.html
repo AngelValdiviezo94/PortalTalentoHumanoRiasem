@@ -1,0 +1,268 @@
+<div class="card" style="margin-bottom: 0; min-height: 70vh;">
+    <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h5 style="color: #FE5A00;">¿Deseas salir de vacaciones?</h5>
+        </div>
+
+        <div class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="group-btn text-center">
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <div>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio21" checked value="1"
+                            [(ngModel)]="codTipSolGen" (ngModelChange)="changecodTipSolGen($event)">
+                        <label class="btn btn-outline-primary" for="btnradio21" placement="top" ngbTooltip="Para ti">
+                            <i class="fas fa-user"></i>
+                        </label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradio22" value="2"
+                            [(ngModel)]="codTipSolGen" (ngModelChange)="changecodTipSolGen($event)">
+                        <label class="btn btn-outline-primary" for="btnradio22" placement="top"
+                            ngbTooltip="Para un colaborador">
+                            <i class="fas fa-group"></i>
+                        </label>
+                    </div>
+                    <div style="width: 300px;">
+                        <input style="width: 100%;" *ngIf="codTipSolGen === '1'" class="form-control"
+                            placeholder="colaborador" type="text" [formControl]="ctrlColaborador" readonly>
+                        <ng-select *ngIf="codTipSolGen === '2'" placeholder="Selecciona un colaborador"
+                            (change)="changeColaborador($event)" [loading]="loadingComboCola">
+                            <ng-option *ngFor="let co of colaboradores" [value]="co">
+                                {{co.apellidos + ' ' + co.nombres}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="(periodoColaborador.length > 0 && colSelected && !tieneSolicitudPendiente && codTipSolGen === '1') || 
+                    (periodoColaborador.length > 0 && colSelected && !tieneSolicitudPendiente && codTipSolGen === '2' && colaboradores.length > 0)"
+            class="row col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+            <div class="card-body col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="media-list pb-0">
+                    <div *ngIf="codTipSolGen === '1'" class="media text-left">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <h5>{{empleado?.apellidos + ' ' + empleado?.nombres}}</h5>
+                        </div>
+                        <div class="media-body col-md-12 col-lg-6 col-xl-6" style="line-height: 22px;">
+                            <div>
+                                <label> C.I </label>
+                                <span class="tx-medium">
+                                    {{empleado?.identificacion}}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tx-medium">
+                                    {{empleado?.cargo}}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tx-medium">
+                                    {{empleado?.empresa}}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tx-medium">
+                                    {{empleado?.area}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="codTipSolGen === '2' && colSelected !== undefined" class="media text-left">
+                        <div class="col-md-6 col-lg-6 col-xl-6">
+                            <h5>{{ colSelected?.apellidos + ' ' + colSelected?.nombres }}</h5>
+                        </div>
+                        <div class="media-body col-md-12 col-lg-6 col-xl-6" style="line-height: 22px;">
+                            <div>
+                                <label> C.I </label>
+                                <span class="tx-medium">
+                                    {{ colSelected?.identificacion }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tx-medium">
+                                    {{ colSelected?.cargoPanacea }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tx-medium">
+                                    {{ colSelected?.empresaPanacea }}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="tx-medium">
+                                    {{ colSelected?.areaPanacea }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="media-body" style="line-height: 22px; text-align: center;">
+                    <table style="width: 100%;">
+                        <tr style="border-bottom: 1px solid;">
+                            <th class="px-3">Periodo</th>
+                            <th class="px-3">Días pendientes</th>
+                            <th class="px-3">Días solicitados</th>
+                        </tr>
+                        <tr *ngFor="let pc of periodoColaborador">
+                            <td>{{ pc.inicioVacacion | date: 'yyyy' }} - {{ pc.finVacacion | date: 'yyyy' }}</td>
+                            <td>{{ pc.diasVacaciones }}</td>
+                            <td>{{ pc.diasTomados }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row media-body col-sm-12 col-md-12 col-lg-12 col-xl-12 text-left" style="margin-top: 3%;">
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <span> <b>Desde: </b> {{DevuelveFechaVacacion(fromDate)}}</span>
+                        <br>
+                        <span> <b>Hasta: </b> {{DevuelveFechaVacacion(toDate)}}</span>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6" style="color: #FE5A00;">
+                        <span>Recuerda que deberás regresar el: </span>
+                        <br>
+                        <b *ngIf="fechaRetorno === undefined && toDate !== undefined">No tienes un turno asignado</b>
+                        <b *ngIf="fechaRetorno !== undefined" style="font-size: 15px">
+                            {{ DevuelveFechaVacacionDate(fechaRetorno) }}</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="form-group">
+                    <ng-select [items]="lstEmpleadoReemplazo | async" placeholder="Selecciona un compañero de reemplazo"
+                        bindLabel="nombre" bindValue="identificacion" [(ngModel)]="selectedReemplazoId">
+                    </ng-select>
+                    <ng-container class="invalid" *ngIf="!selectedReemplazoId && formVacacionTocuched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="form-group col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                <mat-form-field appearance="outline" color="warn" style="margin-top: -0.25em !important;">
+                    <textarea matInput class="form-control" maxlength="300" [formControl]="comentario"
+                        placeholder="Ingresa un comentario" rows="1"></textarea>
+                    <mat-hint align="end">{{comentario.value?.length}} / 300</mat-hint>
+                </mat-form-field>
+                <ng-container class="invalid" *ngIf="!comentario.valid">
+                    <small class="tx-danger">Cantidad de caracteres excedido</small>
+                </ng-container>
+                <!-- <ng-container class="invalid" *ngIf="!comentario && formVacacionTocuched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container> -->
+            </div>
+
+
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="dp-hidden position-absolute" style="margin-left: 12px;">
+                    <div class="input-group">
+                        <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+                            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2"
+                            [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!" tabindex="-1"
+                            [placement]="'top-left'" />
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="input-group">
+                        <input #dpFromDate class="form-control" placeholder="dd/mm/aaaa" name="dpFromDate"
+                            [value]="formatter.format(fromDate)" (click)="datepicker.toggle()"
+                            (input)="fromDate = validateInput(fromDate, dpFromDate.value)" />
+                        <button class="btn btn-outline-primary bi bi-calendar3" (click)="datepicker.toggle()"
+                            type="button">
+                        </button>
+                    </div>
+                    <ng-container class="invalid" *ngIf="!fromDate && formVacacionTocuched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </div>
+                <br>
+                <div>
+                    <div class="input-group">
+                        <input #dpToDate class="form-control" placeholder="dd/mm/aaaa" name="dpToDate"
+                            [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)"
+                            (change)="changeToDate()" (click)="datepicker.toggle()" />
+                        <button class="btn btn-outline-primary bi bi-calendar3" (click)="datepicker.toggle()"
+                            type="button">
+                        </button>
+                    </div>
+                    <ng-container class="invalid" *ngIf="!toDate && formVacacionTocuched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </div>
+            </div>
+
+            <!-- <div class="row col-md-12 col-lg-6 col-xl-6">
+            <div class="col-md-12 col-lg-6 col-xl-6">
+                <div class="dp-hidden position-absolute">
+                    <div class="input-group">
+                        <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+                            [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2"
+                            [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!" tabindex="-1" />
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
+                        [value]="formatter.format(fromDate)"
+                        (input)="fromDate = validateInput(fromDate, dpFromDate.value)" />
+                    <button class="btn btn-outline-primary bi bi-calendar3" (click)="datepicker.toggle()" type="button">
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 col-xl-6">
+                <div class="input-group">
+                    <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+                        [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)" />
+                    <button class="btn btn-outline-primary bi bi-calendar3" (click)="datepicker.toggle()" type="button">
+                    </button>
+                </div>
+            </div>
+            </div> -->
+            <br>
+            <div class="card-footer">
+                <button class="btn btn-primary" (click)="SubmitSolicitudVacacion()">
+                    Registrar
+                </button>
+            </div>
+        </div>
+
+
+        <div *ngIf="(periodoColaborador.length === 0 && codTipSolGen === '1') || 
+                    (periodoColaborador.length === 0 && codTipSolGen === '2' && colaboradores.length > 0)"
+            class="card col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-top: 2%;">
+            <h5 style="color: #FE5A00;">No tienes periodos disponibles para tomar vacaciones</h5>
+        </div>
+
+        <div *ngIf="(tieneSolicitudPendiente && codTipSolGen === '1') || 
+                    (tieneSolicitudPendiente && codTipSolGen === '2' && colaboradores.length > 0)"
+            class="card col-sm-12 col-md-12 col-lg-12 col-xl-12" style="margin-top: 2%;">
+            <h5 style="color: #FE5A00;">Ya tienes una solicitud de vacaciones en proceso de aprobación</h5>
+        </div>
+
+        <div *ngIf="codTipSolGen === '2' && colaboradores.length === 0" style="margin-bottom: 0; margin-top: 2%;"
+            class="card col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="row">
+                <h5 style="color: #FE5A00;">No tienes colaboradores asignados.</h5>
+            </div>
+        </div>
+
+    </div>
+</div>

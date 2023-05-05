@@ -1,0 +1,596 @@
+// @import "../../../../assets/scss/variables";
+
+#external-events {
+  height: 10%;
+  // margin-top: 2rem; /*3.5rem;*/
+  margin-bottom: 1.5rem;
+  padding: 0 20px;
+  border: 1px solid #ece9fb;
+  background: #f7f6fd;
+  text-align: left;
+  border-radius: 5px;
+}
+
+#external-events h4 {
+  font-size: 16px;
+  margin-top: 0;
+  padding-top: 1em;
+}
+
+#external-events ul {
+  list-style: none;
+  padding: 0;
+}
+
+#external-events ul li {
+  margin: 11px 0;
+  z-index: 9999;
+}
+
+#external-events ul li a {
+  color: #fff;
+  padding: 1px 6px;
+  display: block;
+  // border: 1px solid #FE5A00;
+  border-radius: 3px;
+  // background-color: #FE5A00;
+  font-size: 0.85em;
+
+  &:hover {
+    color: #fff !important;
+  }
+}
+
+::ng-deep {
+
+  .rtl .next {
+    left: 33px;
+  }
+
+  .rtl .prev {
+    left: -49px;
+  }
+
+  .cal-month-view .cal-day-number {
+    font-size: 1.1em;
+    margin-top: 5px;
+    margin-right: 5px;
+    color: #1d212f;
+  }
+
+  .cal-month-view .cal-day-cell:not(:last-child) {
+    border-right-color: #ebf1ff;
+  }
+
+  .main-content-body-calendar .btn {
+    // border:1px solid #ebf1ff;
+    border-radius: 4px;
+    color: #FCDCCB;
+  }
+
+  .cal-month-view .cal-days .cal-cell-row {
+    border-bottom-color: #ebf1ff;
+  }
+
+  .cal-month-view .cal-open-day-events {
+    color: #242222;
+    background-color: #f7f6fd;
+    box-shadow: none;
+    border: 1px solid #ebf1ff;
+    border-top: 0;
+  }
+
+  .cal-month-view .cal-event-title:hover {
+    text-decoration: none;
+  }
+
+  .cal-event-action:focus {
+    outline: 0;
+  }
+
+  mwl-calendar-event-title:focus {
+    outline: 0;
+  }
+
+  .cal-month-view .cal-days {
+    border-color: #ebf1ff;
+  }
+
+  .cal-month-view .cal-cell-row:hover {
+    background-color: #f7f6fd;
+  }
+
+  .cal-month-view .cal-day-cell.cal-today {
+    background-color: rgb(238, 241, 249);
+  }
+
+  .cal-month-view .cal-cell.cal-has-events.cal-open {
+    background-color: #f7f6fd;
+  }
+
+  .cal-month-view .cal-cell-row .cal-cell:hover {
+    background-color: #f7f6fd;
+  }
+
+  .cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
+    color: #FCDCCB;
+  }
+
+  .cal-month-view .cal-day-badge {
+    background-color: #FCDCCB;
+  }
+
+  .cal-month-view .cal-cell:focus {
+    outline: 0;
+  }
+
+  .table.table-bordered {
+    border-top: 1px solid #ebf1ff;
+  }
+
+  .cal-header {
+    border-top: 1px solid #ebf1ff;
+    border-left: 1px solid #ebf1ff;
+    border-right: 1px solid #ebf1ff;
+  }
+
+  .cal-month-view .cal-header .cal-cell {
+    padding: 10px 0;
+  }
+
+  .cal-cell {
+    border-right: 1px solid #ebf1ff;
+  }
+
+  .cal-cell:last-child {
+    border-right: 0;
+  }
+
+  .cal-day-cell:last-child {
+    border-right: 0 !important;
+  }
+
+  .cal-month-view .cal-cell.cal-has-events.cal-open {
+    background: #eef1f9;
+  }
+
+  .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    color: #1a1630;
+  }
+
+  @media (max-width: 991px) {
+    #external-events-1 .btn-group {
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      .btn {
+        padding: .2rem;
+        line-height: 2.5;
+      }
+    }
+  }
+
+  @media (max-width: 669px) {
+    #external-events-1 {
+
+      .text-left,
+      .text-right {
+        text-align: center !important;
+      }
+    }
+
+    .cal-month-view {
+      .cal-cell-top {
+        min-height: 10px;
+      }
+
+      .cal-day-cell {
+        min-height: 10px;
+        min-height: 10px;
+      }
+
+      .cal-day-badge {
+        display: none;
+      }
+
+      .cal-day-cell.cal-today .cal-day-number {
+        font-size: 1.2em;
+      }
+    }
+  }
+}
+
+/** Inicio estilos personlizados del componnete **/
+.btn-agregar-turno {
+  border: 1px solid;
+  padding: 2px;
+  border-radius: 15px;
+  font-size: 12px;
+  height: 24px;
+  width: 24px;
+}
+
+.titulo-seccion-turno {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding-left: 0px;
+}
+
+#stl-lista-turnos {
+  height: 75vh;
+  border: 1px solid #ddd;
+  overflow-y: scroll;
+}
+
+/** Inicio estilos personlizados del componnete **/
+
+// ::ng-deep {
+//   .dark-theme {
+//     #external-events {
+//       border-color: rgba(255,255,255,0.1) !important;
+//       background: #{$dark-theme} !important;
+//     }
+
+//     .cal-month-view .cal-cell-row .cal-cell {
+//       background-color: #{$dark-theme};
+//     }
+
+//     .cal-month-view .cal-cell-row .cal-cell:hover {
+//       background-color: #{$dark-theme};
+//     }
+
+//     .cal-month-view .cal-day-cell:not(:last-child) {
+//       border-right-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-month-view .cal-days .cal-cell-row {
+//       border-bottom-color: #45455b;
+//     }
+
+//     .cal-header {
+//       border: 1px solid #45455b;
+//       border-bottom-width: 0;
+//     }
+
+//     .cal-cell {
+//       border-right: 1px solid rgba(255,255,255,0.1);
+//     }
+
+//     .cal-month-view .cal-days {
+//       border-color: #45455b;
+//     }
+
+//     .dark-theme .cal-month-view .cal-cell-row .cal-cell:hover {
+//       background-color: #fff !important;
+//     }
+
+//     .cal-month-view .cal-cell-row:hover {
+//       background-color: #{$dark-theme} !important;
+//     }
+
+//     .cal-month-view .cal-day-number {
+//       color: #fff !important;
+//     }
+
+//     .cal-month-view .cal-open-day-events {
+//       color: #ffffff;
+//       background-color: #{$dark-theme};
+//       box-shadow: none;
+//       border: 1px solid rgba(255,255,255,0.1);
+//       border-top: 0;
+//     }
+
+//     .cal-month-view .cal-day-cell.cal-drag-over {
+//       background-color: rgba(255,255,255,0.1) !important;
+//     }
+
+//     .cal-week-view {
+//       background-color: #{$dark-theme};
+//       border-top: solid 1px rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-time-events .cal-day-columns:not(.cal-resize-active) .cal-hour-segment:hover {
+//       background-color: #{$dark-theme};
+//     }
+
+//     .cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
+//     .cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
+//       border-bottom-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-day-column {
+//       border-left-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-hour-odd {
+//       background-color: #{$dark-theme};
+//     }
+
+//     .cal-week-view .cal-day-headers {
+//       border-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:hover,
+//     .cal-week-view .cal-day-headers .cal-drag-over {
+//       background-color: #{$dark-theme};
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:first-child {
+//       border-left-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:not(:last-child) {
+//       border-right-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-all-day-events {
+//       border-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-time-events {
+//       border-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-drag-over .cal-hour-segment {
+//       background-color: #{$dark-theme};
+//     }
+
+//     .cal-week-view .cal-header.cal-weekend span {
+//       color: #fff;
+//     }
+//   }
+
+//   [dir=rtl] .dark-theme {
+//     .cal-month-view .cal-day-cell:not(:last-child) {
+//       border-right-color: initial;
+//       border-left-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-day-column {
+//       border-right-color: rgba(255,255,255,0.1);
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:not(:last-child) {
+//       border-left-color: rgba(255,255,255,0.1) !important;
+//     }
+//   }
+//   .transparent-theme {
+//     #external-events {
+//       border-color: #{$transparent-border} !important;
+//       background: #{$transparent-body} !important;
+//     }
+
+//     .cal-month-view .cal-cell-row .cal-cell {
+//       background-color: #{$transparent-body};
+//     }
+
+//     .cal-month-view .cal-cell-row .cal-cell:hover {
+//       background-color: #{$transparent-body};
+//     }
+
+//     .cal-month-view .cal-day-cell:not(:last-child) {
+//       border-right-color: #{$transparent-border};
+//     }
+
+//     .cal-month-view .cal-days .cal-cell-row {
+//       border-bottom-color: rgb(86 210 190);
+//     }
+
+//     .cal-header {
+//       border: 1px solid rgb(86 210 190);
+//       border-bottom-width: 0;
+//     }
+
+//     .cal-cell {
+//       border-right: 1px solid #{$transparent-border};
+//     }
+
+//     .cal-month-view .cal-days {
+//       border-color: rgb(86 210 190);
+//     }
+
+//     .dark-theme .cal-month-view .cal-cell-row .cal-cell:hover {
+//       background-color: #fff !important;
+//     }
+
+//     .cal-month-view .cal-cell-row:hover {
+//       background-color: #{$transparent-body} !important;
+//     }
+
+//     .cal-month-view .cal-day-number {
+//       color: #fff !important;
+//     }
+
+//     .cal-month-view .cal-open-day-events {
+//       color: #ffffff;
+//       background-color: #{$transparent-body};
+//       box-shadow: none;
+//       border: 1px solid #{$transparent-border};
+//       border-top: 0;
+//     }
+
+//     .cal-month-view .cal-day-cell.cal-drag-over {
+//       background-color: #{$transparent-border} !important;
+//     }
+
+//     .cal-week-view {
+//       background-color: #{$transparent-body};
+//       border-top: solid 1px #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-time-events .cal-day-columns:not(.cal-resize-active) .cal-hour-segment:hover {
+//       background-color: #{$transparent-body};
+//     }
+
+//     .cal-week-view .cal-hour:not(:last-child) .cal-hour-segment,
+//     .cal-week-view .cal-hour:last-child :not(:last-child) .cal-hour-segment {
+//       border-bottom-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-day-column {
+//       border-left-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-hour-odd {
+//       background-color: #{$transparent-body};
+//     }
+
+//     .cal-week-view .cal-day-headers {
+//       border-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:hover,
+//     .cal-week-view .cal-day-headers .cal-drag-over {
+//       background-color: #{$transparent-body};
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:first-child {
+//       border-left-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:not(:last-child) {
+//       border-right-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-all-day-events {
+//       border-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-time-events {
+//       border-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-drag-over .cal-hour-segment {
+//       background-color: #{$transparent-body};
+//     }
+
+//     .cal-week-view .cal-header.cal-weekend span {
+//       color: #fff;
+//     }
+//   }
+
+//   [dir=rtl] .transparent-theme {
+//     .cal-month-view .cal-day-cell:not(:last-child) {
+//       border-right-color: initial;
+//       border-left-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-day-column {
+//       border-right-color: #{$transparent-border};
+//     }
+
+//     .cal-week-view .cal-day-headers .cal-header:not(:last-child) {
+//       border-left-color: #{$transparent-border} !important;
+//     }
+//   }
+// }
+
+.dp-hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: #FE5A00;
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: #f89b69;
+}
+
+.nombre-colaborador-asignado {
+  width: 190px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  margin: 0;
+  background: white;
+  margin-right: 0.5rem;
+}
+
+.stl-lista-subturnos-tag {
+  width: 62%;
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-y: hidden;
+}
+
+.selected-tag-subturno {
+  background-color: #f89b69;
+  color: #fff !important;
+}
+
+.body-asignados-subturnos {
+  max-height: 30vh;
+  white-space: nowrap;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.swal2-popup.swal2-modal.swal2-show {
+  font-size: 12px !important;
+}
+
+.elemntoListaTurno {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+}
+
+.customTabJornada {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  font-size: 14px;
+}
+
+:host ::ng-deep .cal-month-view .cal-event {
+  background: url(https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/ENROLITO_COLABORADOR_COLOR.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 12px;
+}
+
+:host ::ng-deep .cal-month-view .cal-day-cell.cal-today {
+  background: #fadccc !important;
+}
+
+.logoTamTur {
+  height: 28px;
+  width: auto;
+}
+
+.imagenTurno {
+  height: 26px;
+  width: auto;
+  vertical-align: text-bottom;
+}
+
+.imagenRegistroColaborador {
+  height: 55px;
+  width: auto;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.panel-tabs.main-nav-line .nav-link {
+  padding-left: 2px !important;
+}

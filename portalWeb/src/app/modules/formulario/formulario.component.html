@@ -1,0 +1,286 @@
+<div class="body">
+  <div class="page-single">
+    <div class="container">
+      <div class="row row-sm">
+        <div class="col-lg-12 col-md-12">
+          <div class="card custom-card ">
+            <div class="card-body">
+              <div class="d-block mb-1 text-center"><img
+                  src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/LOGOENROLAPP_WEB.png"
+                  class="sign-favicon ht-100" alt="logo"></div>
+              <aw-wizard [disableNavigationBar]="true" [navBarLayout]="'large-empty-symbols'">
+                <aw-wizard-step [stepTitle]="'PASO 1'" [navigationSymbol]="{ symbol: '1' }">
+                  <form [formGroup]="firstFormGroup" novalidate>
+                    <div>
+
+                    </div>
+
+                    <h6 class="font-weight-normal mb-4 text-center">Ingresa tu número de identificación para iniciar tu
+                      suscripción
+                    </h6>
+                    <div class="row text-center d-block">
+                      <div class="group-btn text-center">
+                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                          <input type="radio" class="btn-check" name="btnradio" id="btnradio21" (click)="checkCedula()"
+                            checked>
+                          <label class="btn btn-outline-primary" for="btnradio21" placement="top" ngbTooltip="Cédula"><i
+                              class="far fa-address-card"></i></label>
+
+                          <input type="radio" class="btn-check" name="btnradio" id="btnradio22"
+                            (click)="checkPasaporte()">
+                          <label class="btn btn-outline-primary" for="btnradio22" placement="top"
+                            ngbTooltip="Pasaporte"><i class="fas fa-id-badge"></i></label>
+                          <input class="form-control" [placeholder]="tipoDocumento === 'c' ? 'Cédula' : 'Pasaporte'"
+                            type="text" [minlength]="minLengthDocumento" [maxlength]="maxLengthDocumento"
+                            [documentoDirective]="tipoDocumento" (input)="myMethod(identificacion.value)"
+                            #identificacion formControlName="identificacion">
+                        </div>
+                      </div>
+                    </div>
+
+                    <ng-container class="invalid"
+                      *ngIf="firstFormGroup.get('identificacion')?.hasError('required') && firstFormGroup.get('identificacion')?.touched">
+                      <small class="tx-danger">Identificación requerida</small>
+                    </ng-container>
+
+                    <ng-container class="invalid" *ngIf="!documentoValido && tipoDocumento === 'c'">
+                      <small class="tx-danger">Identificación no válida</small>
+                    </ng-container>
+
+                    <!-- <ng-container class="invalid"
+                      *ngIf="!firstFormGroup?.valid && firstFormGroup.get('identificacion')?.touched">
+                      <small class="tx-danger">Identificación no válida</small>
+                    </ng-container> -->
+
+                    <!-- Cambiar a false -->
+                    <!-- <div class="form-group">
+                      <button type="button" class="btn btn-primary pull-right" awNextStep>
+                        Siguiente
+                      </button>
+                    </div> -->
+
+                  </form>
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="'PASO 2'" [navigationSymbol]="{ symbol: '2' }">
+                  <form [formGroup]="secondFormGroup" novalidate>
+                    <div class="row row-sm">
+                      <div class="col-lg-12 col-md-12">
+                        <div class="form-group text-center">
+                          <h4>¡Genial!</h4>
+                          <h4 style="color:#FE5A00">{{prospecto?.alias}}</h4>
+                          <h6>hemos enviado un SMS con el Código de Verificación a tu celular.</h6>
+                          <h6>Por favor ingrésalo para finalizar con tu suscripción.</h6>
+                        </div>
+                        <div class="row row-sm mb-3">
+                          <div class="col-lg-12 col-md-12 d-flex justify-content-center">
+                            <ngx-otp-input [config]="otpInputConfig" (fill)="validarotp($event)">
+                            </ngx-otp-input>
+                          </div>
+                        </div>
+                        <div class="container">
+                          <div class="contador" *ngIf="!reenviar">
+                            <cd-timer id="timer-countercallback1" class="tx-26 mb-0" format="intelli" [startTime]="120"
+                              [countdown]="true" (onComplete)="onComplete($event)" (onTick)="onTick($event)"
+                              (onStart)="onStart($event)"></cd-timer>
+                          </div>
+                          <div class="contador" *ngIf="reenviar">
+                            <button class="btn text-white" (click)="reenviarOtp()">Reenviar</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div class="form-group">
+                      <button type="button" class="btn btn-primary pull-right"
+                        awNextStep>
+                        Siguiente
+                      </button>
+                    </div> -->
+                    <!-- <button type="button" class="btn btn-dark me-1 pull-end" awPreviousStep>
+                        Anterior
+                      </button> -->
+
+                  </form>
+                </aw-wizard-step>
+                <aw-wizard-step [stepTitle]="'PASO 3'" [navigationSymbol]="{ symbol: '3' }">
+                  <form [formGroup]="thirdFormGroup" novalidate>
+                    <div class="row row-sm">
+                      <div class="col-sm">
+                        <div class="form-group custom-datepicker-dropdown custom-datepicker">
+                          <label>Nací el</label>
+                          <div class="input-group">
+                            <!-- <div class="input-group-text">
+                              <i class="typcn typcn-calendar-outline tx-24 lh--9 op-6"></i>
+                            </div> -->
+                            <!-- <input class="form-control" placeholder="yyyy-mm-dd" name="fechaNacimiento"
+                              id="fechaNacimiento" type="date" formControlName="fechaNacimiento" min="1940-01-01"
+                              max="2004-01-01" #fechaNacimiento> -->
+                            <button (click)="a.toggle()" class="btn btn-outline-primary bi bi-calendar3" type="button">
+                            </button>
+                            <input [ngModelOptions]="{standalone: true}" class="form-control" (click)="a.toggle()"
+                              placeholder="dd/mm/aaaa" name="dp" [(ngModel)]="fechaNacimiento" ngbDatepicker
+                              #a="ngbDatepicker" [minDate]="minDateFechaNac" [maxDate]="maxDateFechaNac">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-1 d-flex justify-content-center align-items-center text-center">
+                        <div class="form-group">
+                          <div class="pos-relative w-fitcont">
+                            <span class="profile-image2"><img [src]="urlimagen" (click)="open()"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm">
+                        <div class="form-group">
+                          <label class="form-control-label">Mi género es</label>
+                          <ng-select id="genero" class="" placeholder="Seleccione su género..."
+                            (change)="selectGenero($event)">
+                            <ng-option value="M">Masculino</ng-option>
+                            <ng-option value="F">Femenino</ng-option>
+                          </ng-select>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">Y vivo en</label>
+                      <input class="form-control" required id="direccion" name="direccion" type="text"
+                        placeholder="Ingrese dirección" formControlName="direccion" #direccion>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-control-label">En esta ubicación</label>
+                      <button type="button" class="btn btn-primary" (click)="openDialog()"
+                        [disabled]="!thirdFormGroup.valid">
+                        <i class="fa fa-map" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                    <ng-container class="invalid"
+                      *ngIf="thirdFormGroup.get('direccion')?.hasError('required') && thirdFormGroup.get('direccion')?.touched">
+                      <small class="tx-danger">Dirección requerida</small>
+                    </ng-container>
+                    <div class="form-group">
+                      <label class="form-control-label" for="correo">Mi Correo electrónico es</label>
+                      <input class="form-control" required id="correo" name="correo" type="email"
+                        placeholder="Ingrese correo" #email formControlName="correo">
+                    </div>
+                    <!-- value="{{prospecto?.email}}" -->
+                    <ng-container class="invalid"
+                      *ngIf="thirdFormGroup.get('correo')?.hasError('required') && thirdFormGroup.get('correo')?.touched">
+                      <small class="tx-danger">Correo requerido</small>
+                    </ng-container>
+                    <ng-container class="invalid"
+                      *ngIf="thirdFormGroup.get('correo')?.hasError('email') && thirdFormGroup.get('correo')?.touched">
+                      <small class="tx-danger">Correo inválido</small>
+                    </ng-container>
+
+
+                    <div class="form-group">
+                      <button type="button" class="btn btn-primary pull-right" [disabled]="!valido" awNextStep>
+                        Siguiente
+                      </button>
+                    </div>
+
+                  </form>
+                </aw-wizard-step>
+                <aw-wizard-completion-step stepTitle="PASO 4" [navigationSymbol]="{ symbol: '4' }" awEnableBackLinks>
+                  <form [formGroup]="fourthFormGroup" novalidate>
+                    <div class="form-group">
+                      <label class="form-control-label">¿Cuál quieres que sea tu contraseña?</label>
+                      <!-- <input class="form-control" required id="contrasena" name="contrasena" type="password"
+                        formControlName="contrasena" placeholder="Contraseña" #contrasena> -->
+                      <div class="input-group mb-3">
+                        <input aria-describedby="basic-addon2" required id="contrasena" name="contrasena"
+                          class="form-control" placeholder="Contraseña" [type]="ocultar ? 'password' : 'text'"
+                          formControlName="contrasena" #contrasena>
+                        <span class="input-group-text" (click)="mostrarPassword()"
+                          style="background: #FFFFFF; cursor: pointer;">
+                          <i *ngIf="ocultar" class="fa fa-eye"></i>
+                          <i *ngIf="!ocultar" class="fa fa-eye-slash"></i>
+                        </span>
+                      </div>
+
+                      <div></div>
+                      <label class="col justify-content-start text-center align-items-center d-flex"
+                        [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                        <i class="material-icons">
+                          {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                          fourthFormGroup.controls['contrasena'].hasError('minlength') ? 'cancel' :
+                          'check_circle' }}
+                        </i>
+                        Mínimo 10 caracteres
+                      </label>
+
+                      <label class="col justify-content-start text-center align-items-center d-flex"
+                        [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                        <i class="material-icons">
+                          {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                          fourthFormGroup.controls['contrasena'].hasError('hasNumber') ? 'cancel' :
+                          'check_circle' }}
+                        </i>
+                        Debe contener un número
+                      </label>
+
+                      <label class="col justify-content-start text-center align-items-center d-flex"
+                        [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+                        <i class="material-icons">
+                          {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                          fourthFormGroup.controls['contrasena'].hasError('hasCapitalCase') ? 'cancel' :
+                          'check_circle' }}
+                        </i>
+                        1 mayúscula
+                      </label>
+
+                      <label class="col justify-content-start text-center align-items-center d-flex"
+                        [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+                        <i class="material-icons">
+                          {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                          fourthFormGroup.controls['contrasena'].hasError('hasSmallCase') ? 'cancel' :
+                          'check_circle' }}
+                        </i>
+                        1 minúscula
+                      </label>
+
+                      <label class="col justify-content-start text-center align-items-center d-flex"
+                        [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+                        <i class="material-icons">
+                          {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                          fourthFormGroup.controls['contrasena'].hasError('hasSpecialCharacters') ? 'cancel' :
+                          'check_circle' }}
+                        </i>
+                        1 caracter especial
+                      </label>
+                      <div></div>
+                      <label class="form-control-label">Ingrésala otra vez</label>
+                      <!-- <input class="form-control" required id="confirmarcontrasena" name="confirmarcontrasena"
+                        type="password" formControlName="confirmarcontrasena" placeholder="Confirmar contraseña"> -->
+                      <div class="input-group mb-3">
+                        <input required id="confirmarcontrasena" aria-describedby="basic-addon2"
+                          name="confirmarcontrasena" class="form-control" [type]="ocultar1 ? 'password' : 'text'"
+                          formControlName="confirmarcontrasena" placeholder="Confirmar contraseña">
+                        <span class="input-group-text" (click)="mostrarPassword1()"
+                          style="background: #FFFFFF; cursor: pointer;">
+                          <i *ngIf="ocultar1" class="fa fa-eye"></i>
+                          <i *ngIf="!ocultar1" class="fa fa-eye-slash"></i>
+                        </span>
+                      </div>
+
+                    </div>
+                    <label class="text-danger"
+                      *ngIf="fourthFormGroup.controls['confirmarcontrasena'].hasError('NoPassswordMatch')">
+                      Contraseña no coincide
+                    </label>
+                  </form>
+                  <button class="btn btn-primary pull-right" type="button" [disabled]="!fourthFormGroup.valid"
+                    (click)="finish('C',identificacion.value,direccion.value,email.value,contrasena.value,'1')">Finalizar</button>
+
+                  <button class="btn btn-dark pull-end me-1" type="button" awPreviousStep>Anterior</button>
+                </aw-wizard-completion-step>
+              </aw-wizard>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

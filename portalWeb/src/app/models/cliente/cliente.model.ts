@@ -1,0 +1,28 @@
+export interface Cliente {
+  id: string,
+  codigoIntegracion: string,
+  codigoConvivencia: string,
+  tipoIdentificacion: string,
+  identificacion: string,
+  nombres: string,
+  apellidos: string,
+  alias: string,
+  celular: string,
+  empresa: string,
+  cargo: string,
+  codEmpresa: string,
+  fechaIngreso: string,
+  area: string,
+  rucEmpresa: string,
+  grupoEmpresarial: string,
+  correo: string
+  fechaNacimiento?: Date | string,
+  sueldo: number,
+  tipoContrato: string,
+  dispositivoId: string,
+  latitudLocalidad: number,
+  longitudLocalidad: number,
+  cargoId: string,
+  selectedGroup?: string,
+  nombreCompleto: string
+}

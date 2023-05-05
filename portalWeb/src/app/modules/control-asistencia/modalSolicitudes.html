@@ -1,0 +1,118 @@
+<!-- <h1>Solicitud</h1> -->
+<div *ngIf="data.descripcionFeature == 'PER'">
+  <div class="col-md-12 detalleSolictud row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <li><b>Fecha desde: </b> {{data.fechaDesde}}</li>
+      <li><b>Fecha hasta: </b> {{data.fechaHasta}}</li>
+      <li><b>Hora inicio: </b> {{data.horaInicio}}</li>
+      <li><b>Hora fin: </b> {{data.horaFin}}</li>
+    </div>
+    <div class="col-md-5">
+      <li><b>Cantidad (horas):</b> {{data.cantidadHoras}}
+      </li>
+      <li><b>Tipo permiso:</b> {{data.tipoPermiso}}</li>
+      <li><b>Observación:</b> {{data.observacion}}</li>
+      <li><b>Fecha creación:</b>
+        {{data.fechaCreacion}}
+      </li>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+
+<div *ngIf="data.descripcionFeature == 'JUS'">
+  <div class="col-md-12 detalleSolictud row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <li><b>Marcación entrada: </b>
+        {{data.marcacionEntrada}}</li>
+      <li><b>Marcación salida: </b>
+        {{data.marcacionSalida}}</li>
+      <li><b>Tipo justificación:</b> {{data.tipoJustificacion}} </li>
+    </div>
+    <div class="col-md-5">
+      <li><b>Observación:</b> {{data.comentarios}}</li>
+      <li><b>Fecha creación:</b>
+        {{data.fechaCreacion}}
+      </li>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+
+<div *ngIf="data.descripcionFeature == 'VAC'">
+  <div class="col-md-12 detalleSolictud row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <li><b>Fecha desde: </b> {{data.fechaDesde}}</li>
+      <li><b>Fecha hasta: </b> {{data.fechaHasta}}</li>
+      <li><b>Cantidad (días):</b> {{data.cantidadDias}}
+      </li>
+    </div>
+    <div class="col-md-5">
+      <li><b>Observación:</b> {{data.observacion}}</li>
+      <li><b>Fecha creación:</b>
+        {{data.fechaCreacion}}
+      </li>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+<div *ngIf="data.descripcionFeature == 'HEX'">
+  <div class="col-md-12 detalleSolictud row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <li><b>Fecha desde: </b> {{data.fechaDesde}}</li>
+      <li><b>Fecha hasta: </b> {{data.fechaHasta}}</li>
+      <li><b>Hora inicio: </b> {{data.horaInicio}}</li>
+      <li><b>Hora fin: </b> {{data.horaFin}}</li>
+    </div>
+    <div class="col-md-5">
+      <li><b>Observación:</b> {{data.comentarios}}</li>
+      <li><b>Fecha creación:</b>
+        {{data.fechaCreacion}}
+      </li>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div>
+
+<!--
+  <div class="col-md-12 detalleSolictud row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <li><b>Fecha desde: </b> {{data.fechaDesde}}</li>
+      <li><b>Fecha hasta: </b> {{data.fechaHasta}}</li>
+      <li><b>Cantidad (días):</b> {{data.cantidadDias}}
+      </li>
+    </div>
+    <div class="col-md-5">
+      <li><b>Observación:</b> {{data.observacion}}</li>
+      <li><b>Fecha creación:</b>
+        {{data.fechaCreacion}}
+      </li>
+    </div>
+    <div class="col-md-1"></div>
+  </div> -->
+
+
+<!-- <div *ngIf="element.solicitudes.tipoSolicitud === 'JUS'">
+  <div class="col-md-12 detalleSolictud row">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <li><b>Marcación entrada: </b>
+        {{data.marcacionEntrada}}</li>
+      <li><b>Marcación salida: </b>
+        {{data.marcacionSalida}}</li>
+      <li><b>Tipo justificación:</b> {{data.tipoJustificacion}} </li>
+    </div>
+    <div class="col-md-5">
+      <li><b>Observación:</b> {{data.comentarios}}</li>
+      <li><b>Fecha creación:</b>
+        {{data.fechaCreacion}}
+      </li>
+    </div>
+    <div class="col-md-1"></div>
+  </div>
+</div> -->

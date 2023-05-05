@@ -1,0 +1,509 @@
+<!-- row -->
+<div *ngIf="isAtrConsultarActive" class="row row-sm">
+    <div class="col-sm-12 col-md-12">
+        <div class="card custom-card">
+            <div class="card-body">
+                <div class="row">
+                    <!-- class="col-md-3 col-lg-3 col-xl-2" -->
+                    <div style="width: 23%;">
+                        <div class="row">
+                            <div class="px-2" style="margin-bottom: -15px;">
+                                <img class="drop-img cover-image imagenTurno"
+                                    src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/ENROLITO_COLABORADOR_COLOR.png">
+                                <span class="titulo-seccion-turno">Turnos</span>
+                                <span (click)="consultarHoraColaborador()">
+                                    <img class="imagenRegistroColaborador"
+                                        src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/VECTOR_COLABORADORES_COLOR.png">
+                                </span>
+                            </div>
+                            <!-- <div>
+                              <button type="button" class="btn" style="padding: 0;"
+                                  (click)="consultarHoraColaborador()">
+                                  <img style="height: 40px; width: auto;"
+                                      src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/VECTOR_COLABORADORES_COLOR.png">
+                              </button>
+                          </div> -->
+                            <div *ngIf="isAtrGenerarActive" class="btn btn-link btn-agregar-turno mt-2"
+                                (click)="crearTurno()">
+                                <i class="fa fa-plus"></i>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary tabs-style-2">
+                            <div class="tab-menu-heading">
+                                <!-- Tabs -->
+                                <ul ngbNav #nav1="ngbNav" [(activeId)]="tabActive" (navChange)="changeTabEvent()"
+                                    class="panel-tabs main-nav-line" style="padding-left: 2px !important;">
+                                    <li *ngFor="let ev of events" [ngbNavItem]="ev.id">
+                                        <a ngbNavLink class="customTabJornada"> <img
+                                                class="logoTamTur drop-img cover-image"
+                                                [src]="ev.logo">{{ev.descripcion}}</a>
+                                        <ng-template ngbNavContent>
+                                            <div id="external-events">
+                                                <div mwlDroppable (drop)="externalDropD($event.dropData.event)"
+                                                    dragOverClass="drag-over">
+                                                    <p *ngIf="ev?.turnos?.length === 0">
+                                                        <em> No hay turnos que mostrar</em>
+                                                    </p>
+                                                    <ul>
+                                                        <li *ngFor="let event of (ev.turnos! | filtroTurnoPipe:filtroTurno)"
+                                                            mwlDraggable [dropData]="{event: event}"
+                                                            matTooltip="{{infoTooltipTurno(ev.id, event.id)}}"
+                                                            matTooltipPosition="after" matTooltipShowDelay="500"
+                                                            [touchStartLongPress]="{ delay: 300, delta: 30 }"
+                                                            dragActiveClass="drag-active">
+                                                            <a href="javascript:;" class="elemntoListaTurno"
+                                                                [style.border]="'1px solid {{ev.color}}'"
+                                                                [style.background-color]="ev.color">
+                                                                {{ event.title }}
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="panel-body tabs-menu-body main-content-body-right border p-0">
+                                <div class="input-group p-1">
+                                    <input class="form-control form-control-sm" placeholder="Buscar turno..."
+                                        type="text" [formControl]="ctrlFiltroTurno">
+                                    <button class="btn btn-primary btn-sm br-ts-0 br-bs-0" type="button" readonly>
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                                <div [ngbNavOutlet]="nav1" id="stl-lista-turnos" class="tabs-menu1"></div>
+                            </div>
+                        </div>
+
+                        <!-- <ng-template #popContent>
+                                              <div class="col-lg-12">
+                                                  <span class="col-lg-6" (click)="editarTurno()">
+                                                      <i class="fas fa-fw fa-pencil-alt"></i>
+                                                  </span>
+                                                  <span class="col-lg-6" (click)="eliminarTurno()">
+                                                      <i class="fas fa-fw fa-trash-alt"></i>
+                                                  </span>
+                                              </div>
+                                          </ng-template> -->
+                        <!-- [ngbPopover]="popContent"  popoverTitle="Opciones" [closeDelay]="1500" triggers="click:mouseleave" -->
+                        <!-- placement="top" ngbTooltip=" {{infoTooltipTurno(event.start, event.end)}}" -->
+
+                        <!-- <div id="stl-lista-turnos">
+                          <div *ngFor="let ev of events">
+                              <div id="external-events">
+                                  <div class="row pt-3">
+                                      <div class="px-1">
+                                      </div>
+                                      <h4 class="px-1">{{ev.descripcion}}</h4>
+                                  </div>
+                                  <div mwlDroppable (drop)="externalDropD($event.dropData.event)"
+                                      dragOverClass="drag-over">
+                                      <p *ngIf="ev?.turnos?.length === 0"><em>No hay turnos que mostrar</em></p>
+                                      <ul>
+                                          <li *ngFor="let event of ev?.turnos" mwlDraggable
+                                              [dropData]="{event: event}"
+                                              [touchStartLongPress]="{ delay: 300, delta: 30 }"
+                                              dragActiveClass="drag-active">
+                                              <a href="javascript:;" class="elemntoListaTurno">
+                                                  {{ event.title }}
+                                              </a>
+                                          </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div> -->
+
+                    </div>
+
+                    <div class="mt-2" style="width: 77%;" id="external-events-1">
+                        <div class="row text-center">
+                            <div class="col-md-4 text-start mb-2">
+                                <div class="btn-group">
+                                    <div class="btn btn-primary px-3 prev" mwlCalendarPreviousView [view]="view"
+                                        [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn btn-primary px-3 next" mwlCalendarNextView [view]="view"
+                                        [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">
+                                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="btn btn-primary ms-2" mwlCalendarToday [(viewDate)]="viewDate">
+                                        Hoy
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' }}</h3>
+                            </div>
+                            <div class="col-md-5 text-end mb-2">
+                                <div class="btn-group">
+                                    <div *ngIf="isAtrCargarExcelActive" style="margin-right: 4px;" placement="bottom"
+                                        ngbTooltip="Cargar archivo">
+                                        <app-subir-archivo-turnos
+                                            (refreshTurnosAsigandos)="refreshPorCargaExcel()"></app-subir-archivo-turnos>
+                                    </div>
+                                    <div *ngIf="isAtrGenerarExcelActive" style="margin-right: 4px;" placement="bottom"
+                                        ngbTooltip="Genera archivo">
+                                        <button style="width: 41px;" type="button" class="btn btn-primary"
+                                            (click)="openModalGenerarArchivoExcel()">
+                                            <i class="fa fa-file" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                    <div class="btn btn-primary mb-1" (click)="setView(CalendarView.Month)"
+                                        [class.active]="view === CalendarView.Month">
+                                        Mes
+                                    </div>
+                                    <div class="btn btn-primary mb-1" (click)="setView(CalendarView.Week)"
+                                        [class.active]="view === CalendarView.Week">
+                                        Semana
+                                    </div>
+                                    <div class="btn btn-primary mb-1" (click)="setView(CalendarView.Day)"
+                                        [class.active]="view === CalendarView.Day">
+                                        Día
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+
+                            </div>
+                        </div>
+                        <br />
+
+                        <div [ngSwitch]="view">
+                            <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate"
+                                [events]="lstAsignacion" [activeDayIsOpen]="activeDayIsOpen" [refresh]="refresh"
+                                (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('VISU', $event.event)"
+                                (eventTimesChanged)="eventTimesChanged($event)" [locale]="locale"
+                                [weekStartsOn]="weekStartsOn">
+                            </mwl-calendar-month-view>
+                            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate"
+                                [events]="lstAsignacion" [refresh]="refresh" [snapDraggedEvents]="false"
+                                (eventClicked)="handleEvent('VISU', $event.event)" [weekStartsOn]="weekStartsOn"
+                                (eventTimesChanged)="eventDropped($event)" [locale]="locale">
+                            </mwl-calendar-week-view>
+                            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate"
+                                [events]="lstAsignacion" [refresh]="refresh" [snapDraggedEvents]="false"
+                                (eventClicked)="handleEvent('VISU', $event.event)"
+                                (eventTimesChanged)="eventDropped($event)" [locale]="locale">
+                            </mwl-calendar-day-view>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /row -->
+
+<!-- INI MODAL ASIGNACIÓN DE TRUNO -->
+<ng-template #modalContent let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Asignación de turno</h5>
+        <button [disabled]="procesando" type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formAsignaTurno" class="form form-horizontal" autocomplete="off">
+            <div class="form-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="dp-hidden position-absolute">
+                            <div class="input-group">
+                                <input name="datepicker" class="form-control" ngbDatepicker #datepicker="ngbDatepicker"
+                                    [autoClose]="'outside'" (dateSelect)="onDateSelection($event)" [displayMonths]="2"
+                                    [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate!" tabindex="-1" />
+                                <!-- [footerTemplate]="fh" -->
+                                <ng-template #t let-date let-focused="focused">
+                                    <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                        [class.faded]="isHovered(date) || isInside(date)"
+                                        (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+                                        {{ date.day }}
+                                    </span>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input #dpFromDate class="form-control" placeholder="dd-mm-yyyy" name="dpFromDate"
+                                [value]="formatter.format(fromDate)" (click)="datepicker.toggle()"
+                                (input)="fromDate = validateInput(fromDate, dpFromDate.value)" />
+                            <button class="btn btn-outline-primary bi bi-calendar3" (click)="datepicker.toggle()"
+                                type="button">
+                            </button>
+                        </div>
+                        <ng-container class="invalid" *ngIf="fromDate === null">
+                            <small class="tx-danger">Campo requerido</small>
+                        </ng-container>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input #dpToDate class="form-control" placeholder="dd-mm-yyyy" name="dpToDate"
+                                [value]="formatter.format(toDate)" (click)="datepicker.toggle()"
+                                (input)="toDate = validateInput(toDate, dpToDate.value)" />
+                            <button class="btn btn-outline-primary bi bi-calendar3" (click)="datepicker.toggle()"
+                                type="button">
+                            </button>
+                        </div>
+                        <ng-container class="invalid" *ngIf="toDate === null">
+                            <small class="tx-danger">Campo requerido</small>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Selecciona colaborador</label>
+                    <ng-select [items]="colaborador" [multiple]="true" bindLabel="nombreCompleto"
+                        groupBy="selectedGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
+                        [closeOnSelect]="false" bindValue="id" formControlName="colaborador"
+                        (change)="changeSelectCola($event)">
+                        <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                [ngModelOptions]="{standalone: true}" />
+                            Todos
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                [ngModelOptions]="{standalone: true}" />
+                            {{item.nombreCompleto}}
+                        </ng-template>
+                    </ng-select>
+                    <ng-container class="invalid"
+                        *ngIf="formAsignaTurno.get('colaborador')?.hasError('required') && formAsignaTurno.get('colaborador')?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </div>
+
+                <div *ngIf="colaboradorSubturno.length > 0" class="card mb-0">
+                    <div class="card-header pb-0">
+                        <h6 class="card-title mb-0 pb-0">Asignados</h6>
+                    </div>
+                    <div class="card-body body-asignados-subturnos">
+                        <div class="col-md">
+                            <div *ngFor="let cs of colaboradorSubturno"
+                                class="border d-flex p-1 br-5 mb-2  justify-content-between ">
+                                <div class="recent-contacts d-flex align-items-center">
+                                    <div>
+                                        <h6 class="mt-1 mb-1 nombre-colaborador-asignado">
+                                            {{ cs.nombre }}
+                                        </h6>
+                                    </div>
+                                    <div class="stl-lista-subturnos-tag">
+                                        <div class="tags">
+                                            <a class="tag" *ngFor="let cs1 of cs.subturnos"
+                                                (click)="seleccionaSubturno(cs.id, cs1.id)"
+                                                [ngClass]="{'selected-tag-subturno' : cs1.selected }">
+                                                {{cs1.title}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!procesando" class="modal-footer p-0">
+                <button type="button" class="btn btn-primary" (click)="asignarTurno(smallmodal)">
+                    Asignar turno
+                </button>
+            </div>
+            <div *ngIf="procesando" class="modal-footer p-0 btn-animation">
+                <button type="button" class="btn btn-primary btn-spiner ms-2">
+                    <span class="loading">
+                        Procesando
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+<!-- FIN MODAL ASIGNACIÓN DE TRUNO -->
+
+<app-crear-turno-form *ngIf="showModalCrear" (eventCloseModal)="closeModalCrear()"></app-crear-turno-form>
+
+<ng-template #modalVerAsignado let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Turno - {{ turnoAsignadoSelected.title }}</h5>
+        <button type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div *ngIf="lstColaTurnoSelected.length > 0" class="card mb-0">
+            <div class="card-header pb-0">
+                <h6 class="card-title mb-0 pb-0">Asignados</h6>
+            </div>
+            <div class="card-body body-asignados-subturnos">
+                <div class="col-md">
+                    <div *ngFor="let cs of lstColaTurnoSelected"
+                        class="border d-flex p-1 br-5 mb-2  justify-content-between ">
+                        <div class="recent-contacts d-flex align-items-center">
+                            <div>
+                                <h6 class="mt-1 mb-1 nombre-colaborador-asignado">
+                                    {{ cs.colaborador }}
+                                </h6>
+                            </div>
+                            <div class="stl-lista-subturnos-tag">
+                                <div class="tags ">
+                                    <a class="tag" *ngFor="let cs1 of cs.subturnos"
+                                        [ngClass]="{'selected-tag-subturno' : cs1.selected }">
+                                        {{cs1.title}}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #smallmodal let-modal>
+    <!-- SMALL MODAL -->
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">¿ Continuar asignación ?</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <h6>Modal Body</h6> -->
+        <p>Los siguientes colaboradores no tienen subturnos asignados: </p>
+        <li *ngFor="let css of colaSinSubturno">
+            {{css}}
+        </li>
+    </div>
+    <div class="modal-footer align-self-center">
+        <button class="btn ripple btn-primary" type="button" (click)="confirmacionAsignar(); modal.close()">
+            Sí, continuar
+        </button>
+        <button type="button" class="btn ripple btn-secondary" (click)="modal.close()">
+            No, cancelar
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #smallmodalEditar let-modal>
+    <!-- SMALL MODAL -->
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">¿ Continuar asignación ?</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <!-- <h6>Modal Body</h6> -->
+        <p>Los siguientes colaboradores no tienen subturnos asignados: </p>
+        <li *ngFor="let css of colaSinSubturno">
+            {{css}}
+        </li>
+    </div>
+    <div class="modal-footer align-self-center">
+        <button class="btn ripple btn-primary" type="button" (click)="confirmacionEditarAsignar(); modal.close()">
+            Sí, continuar
+        </button>
+        <button type="button" class="btn ripple btn-secondary" (click)="modal.close()">
+            No, cancelar
+        </button>
+    </div>
+</ng-template>
+
+
+<!-- INI MODAL EDITAR ASIGNACIÓN DE TRUNO -->
+<ng-template #modalEditarAsignacion let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Modificación asignación de turno - {{ turnoAsignadoSelected.title }}</h5>
+        <button [disabled]="procesando" type="button" class="close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formEditarAsignacionTurno" class="form form-horizontal" autocomplete="off">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="form-label">Selecciona colaborador</label>
+                    <ng-select [items]="colaborador" [multiple]="true" bindLabel="nombreCompleto"
+                        groupBy="selectedGroup" [selectableGroup]="true" [selectableGroupAsModel]="false"
+                        [closeOnSelect]="false" bindValue="id" formControlName="colaborador"
+                        (change)="changeSelectColaEdit($event)">
+                        <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                [ngModelOptions]="{standalone: true}" />
+                            Todos
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                                [ngModelOptions]="{standalone: true}" />
+                            {{item.nombreCompleto}}
+                        </ng-template>
+                    </ng-select>
+                    <ng-container class="invalid"
+                        *ngIf="formEditarAsignacionTurno.get('colaborador')?.hasError('required') && formEditarAsignacionTurno.get('colaborador')?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </div>
+
+                <div *ngIf="colaboradorSubturnoEdit.length > 0" class="card mb-0">
+                    <div class="card-header pb-0">
+                        <h6 class="card-title mb-0 pb-0">Asignados</h6>
+                    </div>
+                    <div class="card-body body-asignados-subturnos">
+                        <div class="col-md">
+                            <div *ngFor="let cs of colaboradorSubturnoEdit"
+                                class="border d-flex p-1 br-5 mb-2 justify-content-between ">
+                                <div class="recent-contacts d-flex align-items-center">
+                                    <div>
+                                        <h6 class="mt-1 mb-1 nombre-colaborador-asignado">
+                                            {{ cs.nombre }}
+                                        </h6>
+                                    </div>
+                                    <div class="stl-lista-subturnos-tag">
+                                        <div class="tags">
+                                            <a class="tag" *ngFor="let cs1 of cs.subturnos"
+                                                (click)="seleccionaSubturnoEdit(cs.id, cs1.id)"
+                                                [ngClass]="{'selected-tag-subturno' : cs1.selected }">
+                                                {{cs1.title}}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!procesando" class="modal-footer p-0">
+                <button type="button" class="btn btn-primary" (click)="editarAsignarTurno(smallmodalEditar)">
+                    Modificar asignación
+                </button>
+            </div>
+            <div *ngIf="procesando" class="modal-footer p-0 btn-animation">
+                <button type="button" class="btn btn-primary btn-spiner ms-2">
+                    <span class="loading">
+                        Procesando
+                    </span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+</ng-template>
+<!-- FIN MODAL EDITAR ASIGNACIÓN DE TRUNO -->
+<app-colaborador-turno-marcacion *ngIf="showModalColaborador" (eventCloseModal)="closeModalColaborador()">
+</app-colaborador-turno-marcacion>
+
+<app-generar-archivo-turnos-asignados *ngIf="showModalArchivoTurnosAsignados"
+    (eventCloseModal)="closeModalGenerarArchivoExcel()">
+</app-generar-archivo-turnos-asignados>
+
+<!-- <app-subir-archivo-turnos></app-subir-archivo-turnos> -->

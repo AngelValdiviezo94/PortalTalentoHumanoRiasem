@@ -1,0 +1,127 @@
+<div class="breadcrumb-header justify-content-between">
+  <div class="left-content">
+    <span class="main-content-title mg-b-0 mg-b-lg-1">Certificado Laboral</span>
+  </div>
+  <div class="justify-content-center mt-2">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h6>Datos del usuario</h6>
+          <div class="my-md-auto mt-4 prof-details">
+            <h5 class="font-weight-semibold ms-md-4 ms-0 mb-1 pb-0">{{empleado.apellidos}} {{empleado.nombres}}</h5>
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2 ">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.identificacion}}</span>
+            </p>
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2 ">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.cargo}}</span>
+            </p>
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2 ">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.area}}</span>
+            </p>
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2 ">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.empresa}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h6>Sueldo</h6>
+          <label class="custom-switch col-sm justify-content-between text-center align-items-center d-flex" style="width: 200px;">
+            <span class="custom-switch-description me-2">Mostrar sueldo</span>
+            <input type="checkbox" name="custom-switch-checkbox1" class="custom-switch-input" [checked]="mostrarsueldo" (change)="switch($event)">
+            <span class="custom-switch-indicator"></span>
+          </label>
+          <div class="my-md-auto mt-4 prof-details">
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2" *ngIf="mostrarsueldo">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.sueldo}} USD</span>
+            </p>
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2" *ngIf="!mostrarsueldo">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i> **.** USD</span>
+            </p>
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.tipoContrato}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+    <div class="card">
+      <div class="card-body">
+        <div>
+          <h6>Correo</h6>
+          <div class="my-md-auto mt-4 prof-details">
+            <p class="tx-13 text-muted ms-md-4 ms-0 mb-2 pb-2 ">
+              <span class="me-3"><i class="fas fa-address-card me-2"></i>{{empleado.correo}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center justify-content-center align-items-center d-flex">
+  <div class="row">
+    <div class="col-sm-12" id="htmlData">
+      <div class="pdf-body">
+        <table class="PerformanceTable">
+          <tr>
+            <th><img src="https://imagenes.enrolapp.ec/Archivos/Riasem/EnrolApp/imagenes/LogoRiasem.png"></th>
+            <th>Guayaquil, {{fecha}}</th>
+          </tr>
+          <tr>
+            <th colspan="2"><h2>CERTIFICADO DE TRABAJO</h2></th>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <p class="p2" *ngIf="mostrarsueldo">
+                Por medio del presente <b>CERTIFICO</b> que el <b>Sr/Sra. {{certificado.apellidos}} {{certificado.nombres}}</b> con Cédula de Ciudadanía No.
+                <b>{{certificado.identificacion}}</b>, desde el <b>{{certificado.fechaIngreso}}</b> hasta la <b>actualidad</b> desempeñando el cargo de <b>{{certificado.cargo}}</b>
+                , percibiendo un sueldo de <b>${{certificado.sueldo}}.</b>
+              </p>
+              <p class="p2" *ngIf="!mostrarsueldo">
+                Por medio del presente <b>CERTIFICO</b> que el <b>Sr/Sra. {{certificado.apellidos}} {{certificado.nombres}}</b> con Cédula de Ciudadanía No.
+                <b>{{certificado.identificacion}}</b>, desde el <b>{{certificado.fechaIngreso}}</b> hasta la <b>actualidad</b> desempeñando el cargo de <b>{{certificado.cargo}}</b>
+              </p>
+              <p class="p2">
+                Autorizo al <b>Sr/Sra. {{certificado.apellidos}} {{certificado.nombres}}</b> hacer uso del presente certificado como estime conveniente.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">Atentamente.</td>
+          </tr>
+          <tr>
+            <td colspan="2"><img src="https://imagenes.enrolapp.ec/Archivos/Riasem/EnrolApp/imagenes/firmaMartha.png"></td>
+          </tr>
+          <tr>
+            <th colspan="2">{{certificado.encargadoCorporativoRrhh}}</th>
+          </tr>
+          <tr>
+            <th colspan="2">{{certificado.cargoCorporativoRrhh}}</th>
+          </tr>
+          <tr>
+            <th colspan="2">{{certificado.grupoEmpresarial}}</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button> Generar</button>

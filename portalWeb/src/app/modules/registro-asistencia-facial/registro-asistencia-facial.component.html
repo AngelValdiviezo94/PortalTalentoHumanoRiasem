@@ -1,0 +1,118 @@
+<div  #principal #pantallaRAF="ngxFullscreen" ngxFullscreen
+    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-1">
+    <div class="card custom-card m-0">
+        <div class="card-body">
+            <div style="text-align: right;">
+                <button type="button" class="btn btn-outline-primary button-icon" (click)="enterFullscreen()">
+                    <i *ngIf="pantallaRAF.isFullscreen" matTooltip="Minimizar" class="fa fa-window-restore"
+                        aria-hidden="true"></i>
+                    <i *ngIf="!pantallaRAF.isFullscreen" matTooltip="Maximizar" class="fa fa-window-maximize"
+                        aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                    <div style="padding-top: 2px">
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('1')">1</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('2')">2</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('3')">3</button>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('4')">4</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('5')">5</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('6')">6</button>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('7')">7</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('8')">8</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('9')">9</button>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="borrarTodo()">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="numeroBoton('0')">0</button>
+                            <button type="button" class="btn btn-outline-dark color-button-numeric-reg-asis"
+                                (click)="enter()">
+                                <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6" style="padding: 4% 2%;">
+                    <div style="width: 100%;" (keyup.enter)="registrar()">
+                        <div class="text-center">
+                            <label class="estilo-titulo-reg-asis">
+                                Identificación
+                            </label>
+                            <input *ngIf="esMovil" id="iptIdentificacion" #inputIdentificacion type="text"
+                                onfocus="blur();" class="form-control inputHeightRegAsis" [formControl]="identificacion"
+                                maxlength="10" style="font-size: 60px;" autocomplete="off"
+                                [ngClass]="{'info-input-wrong': colorInputActive }">
+                            <input *ngIf="!esMovil" readonly="true" id="iptIdentificacion" #inputIdentificacion type="text"
+                                class="form-control inputHeightRegAsis" [formControl]="identificacion" maxlength="10"
+                                style="font-size: 70px;" autocomplete="off"
+                                [ngClass]="{'info-input-wrong': colorInputActive }" (input)="validarCedula(inputIdentificacion.value)">
+                            <div class="row">
+                                <div class="col-9" style="text-align: left;">
+                                    <ng-container class="invalid"
+                                        *ngIf="identificacion.hasError('required') && identificacion?.touched">
+                                        <small class="tx-danger" style="font-size: 20px;">Campo requerido</small>
+                                    </ng-container>
+                                    <ng-container class="invalid" *ngIf="identificacion.hasError('pattern')">
+                                        <small class="tx-danger" style="font-size: 20px;">Ingrese solo números</small>
+                                    </ng-container>
+                                </div>
+                                <div class="col-3">
+                                    <mat-hint id="estilo-hint-identificacion" align="end">
+                                        {{identificacion.value?.length}} / 10
+                                    </mat-hint>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12" style="margin-top: 5%;">
+                                <button id="btnRegistrar" type="submit" #buttonRegistrar style="height: 100px;"
+                                    class="btn btn-primary estilo-button-reg-asis" [disabled]="!identificacion.valid"
+                                    (click)="registrar()">
+                                    <i class="fa fa-smile-o" style="font-size: 40px; vertical-align: top;"></i>
+                                    Registrar Asistencia
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-1">
+                            <span *ngIf="novedadMarcacion" class="mensajeNovedad">{{novedadMarcacion}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div style="text-align: right;">
+            <button type="button" class="btn btn-outline-primary button-icon" (click)="enterFullscreen()">
+                <i *ngIf="pantallaRAF.isFullscreen" matTooltip="Minimizar" class="fa fa-window-restore"
+                    aria-hidden="true"></i>
+                <i *ngIf="!pantallaRAF.isFullscreen" matTooltip="Maximizar" class="fa fa-window-maximize"
+                    aria-hidden="true"></i>
+            </button>
+        </div> -->
+    </div>
+</div>
+
+<webcam *ngIf="mostrarCamara" hidden [videoOptions]="videoOptions" [allowCameraSwitch]="allowCameraSwitch"
+    (initError)="handleInitError($event)"></webcam>
+
+<div ngxFullscreen></div>

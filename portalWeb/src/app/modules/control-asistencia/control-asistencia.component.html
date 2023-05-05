@@ -1,0 +1,331 @@
+<div class="card m-2">
+  <div class="row m-2">
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>UDN</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboUdn" [matAutocomplete]="auto">
+        <button *ngIf="!isControlEmpty('UDN')" (click)="limpiarControl('UDN')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarTextoCombo">
+          <mat-option *ngFor="let option of filteredUdn | async" [value]="option"
+            (onSelectionChange)="onSelectionUdn(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>ÁREA</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboArea" [matAutocomplete]="auto1">
+        <button *ngIf="!isControlEmpty('ARE')" (click)="limpiarControl('ARE')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto1="matAutocomplete" [displayWith]="mostrarTextoCombo">
+          <mat-option *ngFor="let option of filteredArea | async" [value]="option"
+            (onSelectionChange)="onSelectionArea(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>SUBCENTRO COSTO</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboScc" [matAutocomplete]="auto2">
+        <button *ngIf="!isControlEmpty('SCC')" (click)="limpiarControl('SCC')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto2="matAutocomplete" [displayWith]="mostrarTextoCombo">
+          <mat-option *ngFor="let option of filteredScc | async" [value]="option"
+            (onSelectionChange)="onSelectionScc(option)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <mat-form-field class="example-full-width" appearance="outline" color="warn">
+        <mat-label>COLABORADOR</mat-label>
+        <input type="text" matInput [formControl]="colaboradorcontrol" placeholder="Identificación">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row m-2">
+    <!-- <div class="col-sm-3">
+      <div class="row">
+        <mat-form-field appearance="outline" color="warn">
+          <mat-label>DESDE</mat-label>
+          <input matInput [matDatepicker]="picker" [formControl]="desdecontrol" #desde>
+          <mat-datepicker-toggle color="warn" matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker color="warn"></mat-datepicker>
+          <ng-container class="invalid" *ngIf="desdecontrol.hasError('required') && desdecontrol?.touched">
+            <small class="tx-danger">Campo requerido</small>
+          </ng-container>
+        </mat-form-field>
+      </div>
+    </div> -->
+    <!-- <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>HASTA</mat-label>
+        <input matInput [matDatepicker]="picker1" [formControl]="hastacontrol" #hasta>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+        <ng-container class="invalid" *ngIf="hastacontrol.hasError('required') && hastacontrol?.touched">
+          <small class="tx-danger">Campo requerido</small>
+        </ng-container>
+      </mat-form-field>
+    </div> -->
+    <div class="col-sm-3">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>PERIODO</mat-label>
+        <input type="text" matInput [formControl]="ctrlComboPeriodo" [matAutocomplete]="auto3">
+        <button *ngIf="!isControlEmpty('PER')" (click)="limpiarControl('PER')" mat-icon-button matSuffix>
+          <mat-icon style="font-size: 16px;">close</mat-icon>
+        </button>
+        <mat-autocomplete #auto3="matAutocomplete" [displayWith]="mostrarTextoComboPer">
+          <mat-option *ngFor="let option of filteredPer | async" [value]="option"
+            (onSelectionChange)="onSelectionPer(option)">
+            {{option.desPeriodo}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col-sm-3">
+      <div class="form-group">
+        <ng-select [items]="lsComboNov" [multiple]="true" bindLabel="codigo" groupBy="selectedAllGroup" placeholder="Seleccionar novedades.."
+          [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="descripcion"
+          [formControl]="ctrlComboNov" (change)="changeSelectNov($event)">
+          <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected" />
+            Todas
+          </ng-template>
+          <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+              [ngModelOptions]="{standalone: true}" />
+            {{item.descripcion}}
+          </ng-template>
+        </ng-select>
+      </div>
+    </div>
+    <div class="col-sm-3">
+
+    </div>
+    <div class="col-sm-3 botones">
+      <button class="btn btn-primary" type="button" matTooltipPosition="above" matTooltip="Buscar"
+        (click)="consultarAsistencia()">
+        <i class="fa fa-search" aria-hidden="true"></i>
+      </button>
+      <button class="btn btn-success" type="button" matTooltipPosition="above" matTooltip="Exportar"
+        (click)="exportExcel()">
+        <i class="fa fa-file" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+
+</div>
+<div class="card m-2">
+  <div class="table-responsive">
+    <section class="example-container mat-elevation-z8" tabindex="0">
+      <table cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)" id="tabla-marcacion" matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8" multiTemplateDataRows>
+        <ng-container matColumnDef="udn">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="udn">
+            UDN
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.udn}} </td>
+        </ng-container>
+        <ng-container matColumnDef="colaborador">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="colaborador">
+            COLABORADOR
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.colaborador}} <button mat-icon-button
+              aria-label="expand row"
+              (click)="(expandedElement = expandedElement === element ? null : element);$event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button> </td>
+        </ng-container>
+        <ng-container matColumnDef="fecha">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="fecha">
+            FECHA
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.fecha | date:
+            'dd-MM-yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="dia">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="dia">
+            DIA
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{RetornaNombreDia(element.fecha)}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="entradaL">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="entradaL">
+            ENTRADA LABORAL
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.turnoLaboral.entrada |
+            date: 'HH:mm:ss'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="marcacionEntrada">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="marcacionEntrada">
+            MARCACIÓN ENTRADA
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+            [ngClass]="{'color-TA': (element.turnoLaboral.estadoEntrada=='TA'),'color-NT': (element.turnoLaboral.estadoEntrada=='NT'),'color-NS': (element.turnoLaboral.estadoEntrada=='NS'),'color-AI': (element.turnoLaboral.estadoEntrada=='AI'),'color-AJ': (element.turnoLaboral.estadoEntrada=='AJ'),'color-SI': (element.turnoLaboral.estadoEntrada=='SI'),'color-SJ': (element.turnoLaboral.estadoEntrada=='SJ'),'color-ER': (element.turnoLaboral.estadoEntrada=='ER'),'color-NR': (element.turnoLaboral.estadoEntrada=='NR'),'color-FJ': (element.turnoLaboral.estadoEntrada=='FJ'),'color-FI': (element.turnoLaboral.estadoEntrada=='FI'),'color-LV': (element.turnoLaboral.estadoEntrada=='LV'),'color-SN': (element.turnoLaboral.estadoEntrada=='SN')}">
+            {{element.turnoLaboral.marcacionEntrada | date: 'HH:mm:ss'}}
+            <button
+              *ngIf="element.turnoLaboral.idSolicitudEntrada != '00000000-0000-0000-0000-000000000000' && element.turnoLaboral.idSolicitudEntrada!=null"
+              mat-icon-button aria-label="solicitudes"
+              (click)="detalleSolcitud(element.turnoLaboral.idSolicitudEntrada,element.turnoLaboral.tipoSolicitudEntrada);$event.stopPropagation()">
+              <mat-icon>description</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="salidaL">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="salidaL">
+            SALIDA LABORAL
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.turnoLaboral.salida |
+            date: 'HH:mm:ss'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="marcacionSalida">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="marcacionSalida">
+            MARCACIÓN SALIDA
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+            [ngClass]="{'color-TA': (element.turnoLaboral.estadoSalida=='TA'),'color-NT': (element.turnoLaboral.estadoSalida=='NT'),'color-NS': (element.turnoLaboral.estadoSalida=='NS'),'color-AI': (element.turnoLaboral.estadoSalida=='AI'),'color-AJ': (element.turnoLaboral.estadoSalida=='AJ'),'color-SI': (element.turnoLaboral.estadoSalida=='SI'),'color-SJ': (element.turnoLaboral.estadoSalida=='SJ'),'color-ER': (element.turnoLaboral.estadoSalida=='ER'),'color-NR': (element.turnoLaboral.estadoSalida=='NR'),'color-FJ': (element.turnoLaboral.estadoSalida=='FJ'),'color-FI': (element.turnoLaboral.estadoSalida=='FI'),'color-LV': (element.turnoLaboral.estadoSalida=='LV'),'color-SN': (element.turnoLaboral.estadoSalida=='SN')}">
+            {{element.turnoLaboral.marcacionSalida | date: 'HH:mm:ss'}}
+            <button
+              *ngIf="element.turnoLaboral.idSolicitudSalida != '00000000-0000-0000-0000-000000000000' && element.turnoLaboral.idSolicitudSalida!=null"
+              mat-icon-button aria-label="solicitudes"
+              (click)="detalleSolcitud(element.turnoLaboral.idSolicitudSalida,element.turnoLaboral.tipoSolicitudSalida);$event.stopPropagation()">
+              <mat-icon>description</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="entradaR">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="entradaR">
+            SALIDA LUNCH
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.turnoReceso.entrada |
+            date: 'HH:mm:ss'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="marcacionEntradaR">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="marcacionEntradaR">
+            MARCACIÓN SALIDA LUNCH
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+            [ngClass]="{'color-TA': (element.turnoReceso.estadoEntradaReceso=='TA'),'color-NT': (element.turnoReceso.estadoEntradaReceso=='NT'),'color-NS': (element.turnoReceso.estadoEntradaReceso=='NS'),'color-AI': (element.turnoReceso.estadoEntradaReceso=='AI'),'color-AJ': (element.turnoReceso.estadoEntradaReceso=='AJ'),'color-SI': (element.turnoReceso.estadoEntradaReceso=='SI'),'color-SJ': (element.turnoReceso.estadoEntradaReceso=='SJ'),'color-ER': (element.turnoReceso.estadoEntradaReceso=='ER'),'color-NR': (element.turnoReceso.estadoEntradaReceso=='NR'),'color-FJ': (element.turnoReceso.estadoEntradaReceso=='FJ'),'color-FI': (element.turnoReceso.estadoEntradaReceso=='FI'),'color-LV': (element.turnoReceso.estadoEntradaReceso=='LV'),'color-SN': (element.turnoReceso.estadoEntradaReceso=='SN')}">
+            {{element.turnoReceso.marcacionEntrada | date: 'HH:mm:ss'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="salidaR">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="salidaR">
+            RETORNO LUNCH
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.turnoReceso.salida |
+            date: 'HH:mm:ss'}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="marcacionSalidaR">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="marcacionSalidaR">
+            MARCACIÓN RETORNO LUNCH
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+            [ngClass]="{'color-TA': (element.turnoReceso.estadoSalidaReceso=='TA'),'color-NT': (element.turnoReceso.estadoSalidaReceso=='NT'),'color-NS': (element.turnoReceso.estadoSalidaReceso=='NS'),'color-AI': (element.turnoReceso.estadoSalidaReceso=='AI'),'color-AJ': (element.turnoReceso.estadoSalidaReceso=='AJ'),'color-SI': (element.turnoReceso.estadoSalidaReceso=='SI'),'color-SJ': (element.turnoReceso.estadoSalidaReceso=='SJ'),'color-ER': (element.turnoReceso.estadoSalidaReceso=='ER'),'color-NR': (element.turnoReceso.estadoSalidaReceso=='NR'),'color-FJ': (element.turnoReceso.estadoSalidaReceso=='FJ'),'color-FI': (element.turnoReceso.estadoSalidaReceso=='FI'),'color-LV': (element.turnoReceso.estadoSalidaReceso=='LV'),'color-SN': (element.turnoReceso.estadoSalidaReceso=='SN')}">
+            {{element.turnoReceso.marcacionSalida | date: 'HH:mm:ss'}}
+            <button
+              *ngIf="element.turnoReceso.idSolicitudSalidaReceso != '00000000-0000-0000-0000-000000000000' && element.turnoReceso.idSolicitudSalidaReceso!=null"
+              mat-icon-button aria-label="solicitudes"
+              (click)="detalleSolcitud(element.turnoReceso.idSolicitudSalidaReceso,element.turnoReceso.tipoSolicitudSalidaReceso);$event.stopPropagation()">
+              <mat-icon>description</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="novedad">
+          <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="novedad">
+            NOVEDAD
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+            <button *ngIf="element.novedades.length > 0"
+              (click)="ConsultarNovedad(element.novedades);$event.stopPropagation();" class="btn btn-warning"><i
+                class="far fa-clock"></i></button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="solicitudes">
+          <th mat-header-cell *matHeaderCellDef>
+            SOLICITUD
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+            <div class="row">
+              <li *ngFor="let sol of element.solicitudes">
+                <button (click)="detalleSolcitud(sol.idSolicitud,'HEX');$event.stopPropagation()"
+                  class="btn btn-info">HEX</button>
+              </li>
+            </div>
+          </td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="debito">
+          <th mat-header-cell *matHeaderCellDef>
+            DEBITO
+          </th>
+          <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+            <div class="row">
+              <li *ngFor="let sol of element.solicitudes">
+                <mat-checkbox *ngIf="sol.tipoSolicitud=='PER'"
+                  (click)="$event.stopPropagation();$event.preventDefault()" color="primary"
+                  [checked]="sol.aplicaDescuento" [disableRipple]="true"></mat-checkbox>
+                <mat-checkbox *ngIf="sol.tipoSolicitud=='VAC'"
+                  (click)="$event.stopPropagation();$event.preventDefault()" color="accent"
+                  [checked]="sol.aplicaDescuento" [disableRipple]="true"></mat-checkbox>
+                <mat-checkbox *ngIf="sol.tipoSolicitud=='JUS'"
+                  (click)="$event.stopPropagation();$event.preventDefault()" color="warn"
+                  [checked]="sol.aplicaDescuento" [disableRipple]="true"></mat-checkbox>
+              </li>
+            </div>
+          </td>
+        </ng-container> -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail"
+              [@detailExpand]="element == expandedElement ? 'colaborador' : 'collapsed'">
+              <div class="descripcion">
+                <div class="row">
+                  <div class="campo">
+                    Cédula: {{element.identificacion}}
+                  </div>
+                  <div class="campo">
+                    Código: {{element.codBiometrico}}
+                  </div>
+                  <div class="campo">
+                    Área: {{element.area}}
+                  </div>
+                  <div class="campo">
+                    Sub centro de costo: {{element.subCentroCosto}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: false"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+    </section>
+    <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" aria-label="Seleccionar página de registros"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
+

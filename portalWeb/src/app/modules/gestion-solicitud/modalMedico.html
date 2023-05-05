@@ -1,0 +1,28 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+  <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm">
+      <mat-form-field appearance="outline" color="warn">
+        <mat-label>MOTIVO</mat-label>
+        <input type="text" matInput [formControl]="ctrlTurno" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredTurno | async" [value]="option.descripcion"
+            (onSelectionChange)="onSelectionTur(option, $event)">
+            {{option.descripcion}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="col-sm">
+        <mat-form-field appearance="outline" color="warn">
+          <mat-label>Comentario</mat-label>
+          <input type="text" matInput [formControl]="ctrlComentario">
+        </mat-form-field>
+    </div>
+  </div>
+  <button class="btn btn-success pull-right" (click)="actualizarPermiso()">
+    Aceptar
+  </button>
+</div>

@@ -1,0 +1,312 @@
+table {
+  width: 100%;
+  height: 100%;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+.example-container {
+  max-height: 75vh;
+  overflow: auto;
+}
+
+.mat-sort-header{
+  text-align: center !important;
+  justify-content: center !important;
+  //background-color: black !important;
+}
+
+.color-entrada {
+  color: black;
+  font-weight: bold;
+  background-color: #d8f8e1;
+  //background-image: linear-gradient(90deg, rgba(255,81,47,0.25) 0%, rgba(240,152,25,0.25) 100%);
+}
+.color-salida {
+  color: black;
+  font-weight: bold;
+  background-color: #ffda9e;
+  //background-image: linear-gradient(90deg, rgba(255,81,47,0.25) 0%, rgba(240,152,25,0.25) 100%);
+
+}
+.color-salida-lunch {
+  color: black;
+  font-weight: bold;
+  background-color: #b2e2f2;
+  //background-image: linear-gradient(90deg, rgba(255,81,47,0.25) 0%, rgba(240,152,25,0.25) 100%);
+}
+.color-retorno-lunch {
+  color: black;
+  font-weight: bold;
+  background-color: #fdf9c4;
+  //background-image: linear-gradient(90deg, rgba(255,81,47,0.25) 0%, rgba(240,152,25,0.25) 100%);
+
+}
+
+.btn-grad {
+  background-image: linear-gradient(90deg, rgba(255,81,47,1) 0%, rgba(240,152,25,1) 100%);
+  margin: 10px;
+  padding: 10px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
+}
+
+.btn-grad:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+
+
+
+.mat-row:nth-child(even){
+  background-color: white;
+}
+
+.mat-row:nth-child(odd){
+  background-color: whitesmoke;
+}
+.mat-row:hover {
+  background-color: rgb(255, 232, 198);
+}
+
+td, th {
+  text-align: center !important;
+  vertical-align: middle !important;
+  width: auto;
+}
+
+.mat-form-field {
+  font-weight: bold;
+}
+input{
+  text-transform: uppercase;
+}
+
+
+
+::ng-deep .mat-sort-header-arrow {
+color: white; /*change color of arrow*/
+}
+
+.mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}
+th.mat-header-cell,
+td.mat-cell {
+    text-align: center;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+/* header grid color */
+.mat-header-cell {
+  flex-direction: column;
+  text-align: center !important;
+  background-color: #FE5A00;
+  font-weight: 900;
+  color: white;
+  font-size: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(78, 76, 76);
+}
+
+/* color icono sort mattable*/
+::ng-deep .mat-sort-header-arrow {
+  color: white;
+}
+
+/* centrar texto columnas */
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  text-align: center;
+}
+
+.botones{
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 20px;
+}
+
+
+.mat-table {
+  overflow-x: scroll;
+}
+
+.mat-cell,
+.mat-header-cell {
+word-wrap: initial;
+display: table-cell;
+padding: 0px 10px;
+line-break: unset;
+white-space: nowrap;
+overflow: hidden;
+vertical-align: middle;
+}
+.mat-row,
+.mat-header-row {
+display: table-row;
+}
+
+.descripcion{
+  width: 100%;
+  //display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.campo{
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: solid;
+  border-color: #FE5A00;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+li{
+  list-style: none;
+}
+.dialog-body{
+  width: 1000px;
+  height: 100%;
+}
+
+// TA -- TURNO ASIGNADO - MARCACIÓN NORMAL - C4FD8A
+// NT -- NO TIENE TURNO ASIGNADO, PERO REGISTRA AL MENOS UNA MARCACIÓN - 88CEE8
+// NS -- NO EXISTE REGISTRO DE SALIDA (NO POSEE TURNO) - 85D7C9
+
+// AI -- ATRASO INJUSTIFICADO - F4BC9B
+// AJ -- ATRASO JUSTIFICADO - FDF882
+
+// SI -- SALIDA ANTICIPADA INJUSTIFICADA - D1A4C9
+// SJ -- SALIDA ANTICIPADA JUSTIFICADA - B7A5CD
+
+// ER -- EXCESO DE RECESO - 83C9E5
+// NR -- NO EXISTE REGISTRO DE RETORNO DE RECESO - 81ACD6
+
+// FJ -- FALTA JUSTIFICADA - EE9591
+// FI -- FALTA INJUSTIFICADA - F1A3CB
+
+// LV -- DÍA LIBRE / VACACIONES - FFFFFF
+
+.color-TA {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #c4fd8a;
+}
+.color-NT {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #88CEE8;
+}
+.color-NS {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #85D7C9;
+}
+.color-AI {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #F4BC9B;
+}
+.color-AJ {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #FDF882;
+}
+.color-SI {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #D1A4C9;
+}
+.color-SJ {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #B7A5CD;
+}
+.color-ER {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #83C9E5;
+}
+.color-NR {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #81ACD6;
+}
+.color-FJ {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #EE9591;
+}
+.color-FI {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #F1A3CB;
+}
+.color-LV {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #FFFFFF;
+}
+.color-SN {
+  //color: #000000;
+  //font-weight: bold;
+  background-color: #d6d6d6;
+}

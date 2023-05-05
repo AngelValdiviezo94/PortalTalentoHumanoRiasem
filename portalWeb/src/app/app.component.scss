@@ -1,0 +1,154 @@
+::ng-deep {
+  #glb-loader {
+    display: none;
+  }
+
+  #glb-loader.loaderShow {
+    display: block;
+  }
+
+  #glb-loader {
+    position: fixed;
+    z-index: 50000;
+    background: #fff;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100vw;
+    margin: 0 auto;
+    text-align: center;
+    overflow: hidden;
+  }
+  #glb-loader img {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    transform: translateY(-50%);
+}
+// mat-label{
+//   color: aqua;
+// }
+}
+
+
+
+@import "../assets/scss/variables";
+li::marker {
+  color: transparent;
+}
+
+.main-header-notification.show>a::after,
+.main-header-message.show>a::after,
+.drop-flag.show>a::after {
+  display: none;
+}
+
+::ng-deep {
+  .sidenav-toggled .open-toggle {
+    display: none;
+  }
+
+  .sidenav-toggled .close-toggle {
+    display: block;
+    color: #000;
+  }
+
+  .dark-theme {
+
+    .btn-check:checked+.btn-country,
+    .btn-country.active,
+    .btn-country:active {
+      color: #eee;
+      background-color: $dark-theme;
+    }
+  }
+
+  .rtl {
+    .modal-header .close {
+      margin: -1rem auto -1rem 1rem !important;
+    }
+  }
+
+  form[role=search].active {
+    left: initial;
+    border-right: 0px solid #e3e3f7;
+    right: 0px;
+  }
+
+  .rtl {
+    form[role=search].active {
+      left: 0;
+      border-right: 0px solid #e3e3f7;
+      right: 0px;
+
+      input {
+        right: 0 !important;
+      }
+    }
+  }
+
+  .transparent-theme {
+    .btn-country.active {
+      color: #000 !important;
+    }
+
+    form[role=search].active input {
+      color: #fff !important;
+    }
+
+    form[role=search].active input::placeholder {
+      color: #eee !important;
+    }
+  }
+
+  .rtl {
+    app-header {
+
+      .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3),
+      .input-group:not(.has-validation)> :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+        border-top-right-radius: 5px !important;
+        border-bottom-right-radius: 5px !important;
+        border-top-left-radius: 5px !important;
+        border-bottom-left-radius: 5px !important;
+      }
+    }
+  }
+}
+
+footer {
+  display: flex;
+  background-color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  color: black;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.text{
+  position: absolute;
+  left: 0;
+}
+
+.version{
+  position: absolute;
+  right: 0;
+}
+
+@media screen and (max-width: 980px) {
+  footer {
+  display: none;
+  }
+  }
+
+
+

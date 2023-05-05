@@ -1,0 +1,93 @@
+table {
+  width: 100%;
+}
+.example-container {
+  //height: 35vw;
+  overflow: auto;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+input{
+  text-transform: uppercase;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+/* header grid color */
+.mat-header-cell {
+  //aflex-direction: column;
+  text-align: center !important;
+  background-color: #FE5A00;
+  font-weight: 900;
+  color: white;
+  font-size: 100%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(78, 76, 76);
+}
+
+/* color icono sort mattable*/
+::ng-deep .mat-sort-header-arrow {
+  color: white;
+}
+
+/* centrar texto columnas */
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+th.mat-header-cell,
+td.mat-cell {
+  text-align: center;
+}
+
+.detalleSolictud {
+  border: 1px solid;
+  text-align: left;
+  padding: 0.5rem;
+  width: 95vw;
+  margin-left: 2%;
+  border-radius: 5px;
+  background-color: beige;
+}

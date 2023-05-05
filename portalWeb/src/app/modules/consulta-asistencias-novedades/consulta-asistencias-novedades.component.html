@@ -1,0 +1,250 @@
+<div class="card" style="margin-bottom: 0.5rem !important;">
+    <div class="row m-2">
+        <!-- <div class="col-sm-3">
+            <mat-form-field appearance="outline" color="warn">
+                <mat-label>UDN</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboUdn" [matAutocomplete]="auto">
+                <button *ngIf="!isControlEmpty('UDN')" (click)="limpiarControl('UDN')" mat-icon-button matSuffix>
+                    <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                    <mat-option *ngFor="let option of filteredUdn | async" [value]="option"
+                        (onSelectionChange)="onSelectionUdn(option, $event)">
+                        {{option.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div> -->
+        <!-- <div class="col-sm-3">
+            <mat-form-field appearance="outline" color="warn">
+                <mat-label>ÁREA</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboArea" [matAutocomplete]="auto1">
+                <button *ngIf="!isControlEmpty('ARE')" (click)="limpiarControl('ARE')" mat-icon-button matSuffix>
+                    <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                    <mat-option *ngFor="let option of filteredArea | async" [value]="option"
+                        [matTooltip]="option.descripcion" matTooltipPosition="after" matTooltipShowDelay="1000"
+                        (onSelectionChange)="onSelectionArea(option, $event)">
+                        {{option.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+                <ng-container class="invalid" *ngIf="ctrlComboArea.hasError('required') && ctrlComboArea?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </mat-form-field>
+        </div> -->
+        <!-- <div class="col-sm-3">
+            <mat-form-field appearance="outline" color="warn">
+                <mat-label>SUBCENTRO COSTO</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboScc" [matAutocomplete]="auto2">
+                <button *ngIf="!isControlEmpty('SCC')" (click)="limpiarControl('SCC')" mat-icon-button matSuffix>
+                    <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                    <mat-option *ngFor="let option of filteredScc | async" [value]="option"
+                        [matTooltip]="option.descripcion" matTooltipPosition="after" matTooltipShowDelay="1000">
+                        {{option.descripcion}}
+                    </mat-option>
+                </mat-autocomplete>
+                <ng-container class="invalid" *ngIf="ctrlComboScc.hasError('required') && ctrlComboScc?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </mat-form-field>
+        </div> -->
+        <div class="col-sm-3">
+            <div class="row">
+                <mat-form-field appearance="outline" color="warn">
+                    <mat-label>DESDE</mat-label>
+                    <input matInput [matDatepicker]="picker" [formControl]="ctrlFechaDesde">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <ng-container class="invalid"
+                        *ngIf="ctrlFechaDesde.hasError('required') && ctrlFechaDesde?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="row">
+                <mat-form-field appearance="outline" color="warn">
+                    <mat-label>HASTA</mat-label>
+                    <input matInput [matDatepicker]="picker1" [formControl]="ctrlFechaHasta">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <ng-container class="invalid"
+                        *ngIf="ctrlFechaHasta.hasError('required') && ctrlFechaHasta?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                    </ng-container>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-sm-6" style="align-self: center;">
+            <div class="form-group">
+                <ng-select [items]="lsComboNovedad" [multiple]="true" bindLabel="codigo" groupBy="selectedGroup"
+                    [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="codigo"
+                    [formControl]="ctrlNovedad" (change)="changeSelectNov($event)"
+                    placeholder="Seleccionar novedades..">
+                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                            [ngModelOptions]="{standalone: true}" />
+                        Todos
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                            [ngModelOptions]="{standalone: true}" />
+                        {{item.descripcion}}
+                    </ng-template>
+                </ng-select>
+                <ng-container class="invalid" *ngIf="ctrlNovedad.hasError('required') && ctrlNovedad?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="col-sm-6" style="align-self: center;">
+            <div class="form-group">
+                <ng-select [items]="lsColaborador" [multiple]="true" bindLabel="descripcion" groupBy="selectedGroup"
+                    [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="codigo"
+                    [formControl]="ctrlColaborador" (change)="changeSelectCola($event)"
+                    placeholder="Seleccionar colaboradores..">
+                    <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                            [ngModelOptions]="{standalone: true}" />
+                        Todos
+                    </ng-template>
+                    <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                        <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"
+                            [ngModelOptions]="{standalone: true}" />
+                        {{item.descripcion}}
+                    </ng-template>
+                </ng-select>
+                <ng-container class="invalid" *ngIf="ctrlColaborador.hasError('required') && ctrlColaborador?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+            </div>
+        </div>
+
+        <div>
+            <button type="button" class="btn btn-primary" (keyup.enter)="buscarSolicitudes()"
+                (click)="buscarSolicitudes()">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <!-- class="mat-elevation-z8" -->
+    <div class="card-body">
+        <div class="table-responsive">
+            <section class="example-container mat-elevation-z8" tabindex="0">
+
+                <table mat-table [dataSource]="dataGrid" multiTemplateDataRows matSort>
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Acciones
+                        </th>
+                    </ng-container>
+
+                    <ng-container matColumnDef="udn">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Udn</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.udn}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="colaborador">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Colaborador</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.colaborador}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="identificacion">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Identificación</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.identificacion}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.fecha | date : 'dd-MM-yyyy'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="dia">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Día</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.dia}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="entradaLaboral">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Entrada laboral</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.entradaLaboral}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="marcacionEntrada">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Marcación entrada</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+                            [class]="retornaClaseCss(element.estadoEntrada)">
+                            {{element.marcacionEntrada}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="salidaLaboral">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salida laboral</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.salidaLaboral}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="marcacionSalida">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Marcación salida</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+                            [class]="retornaClaseCss(element.estadoSalida)">
+                            {{element.marcacionSalida}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="entradaReceso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salida receso</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.entradaReceso}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="marcacionEntradaReceso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Marcación salida receso</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+                            [class]="retornaClaseCss(element.estadoEntradaReceso)">
+                            {{element.marcacionEntradaReceso}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="salidaReceso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Retorno receso</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            {{element.salidaReceso}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="marcacionSalidaReceso">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Marcación retorno receso</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"
+                            [class]="retornaClaseCss(element.estadoSalidaReceso)">
+                            {{element.marcacionSalidaReceso}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="novedad">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Novedad</th>
+                        <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+                            <button *ngIf="element.novedad.length > 0" class="btn btn-warning"
+                                (click)="consultarNovedad(element.novedad);$event.stopPropagation();">
+                                <i class="far fa-clock"></i>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="columnasGrid; sticky: false"></tr>
+                    <tr mat-row *matRowDef="let row; columns: columnasGrid;"></tr>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>

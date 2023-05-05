@@ -1,0 +1,94 @@
+<div class="page">
+    <div class="page-single">
+        <div class="container">
+            <div class="row row-sm">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card custom-card">
+                        <div class="card-body">
+                            <div class="d-block mb-1 text-center">
+                                <img src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/LOGOENROLAPP_WEB.png"
+                                    class="sign-favicon ht-100" alt="logo">
+                            </div>
+
+                            <aw-wizard [disableNavigationBar]="true" [navBarLayout]="'large-empty-symbols'">
+                                <aw-wizard-step [stepTitle]="'PASO 1'" [navigationSymbol]="{ symbol: '1' }">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h2 class="color-palabra-reencorr"> ¡Ups! </h2>
+                                            <span class="subtitulo-reencorr"> Aún no has activado tu cuenta </span>
+                                        </div>
+                                        <div class="col-12 text-center mt-2">
+                                            <button type="button" class="btn btn-primary pull-end button-width-ini"
+                                                awNextStep>
+                                                Siguiente
+                                            </button>
+                                        </div>
+                                    </div>
+                                </aw-wizard-step>
+                                <aw-wizard-step [stepTitle]="'PASO 2'" [navigationSymbol]="{ symbol: '2' }">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h2 class="color-palabra-reencorr">{{ infoColaborador?.Nombre || '' }}</h2>
+                                            <div class="subtitulo-reencorr">
+                                                <span>
+                                                    Se enviará un correo electrónico
+                                                </span>
+                                                <br>
+                                                <span>
+                                                    con las instrucciones de activación del
+                                                    servicio a:
+                                                </span>
+                                                <!-- <br>
+                                                <span [ngStyle]="{'color': esNuevoCorreo ? '#d3d3d3' : '#FE5A00'}">
+                                                    {{infoColaborador?.correo}}
+                                                </span> -->
+                                            </div>
+                                            <!-- <div class="subtitulo-reencorr">
+                                                <span>te hemos enviado un correo electrónico a la dirección</span>
+                                                <br>
+                                                <span class="color-palabra-reencorr">{{infoColaborador?.correo}}</span>
+                                                <br>
+                                                <span>con las instrucciones de activación del servicio</span>
+                                                <br>
+                                                <span>Anda y búscalo</span>
+                                            </div> -->
+                                        </div>
+
+                                        <div class="col-12 text-center mt-3">
+                                            <div class="form-group text-center" style="width: 40%; margin: auto;">
+                                                <input class="form-control" [formControl]="ctrlCorreo"
+                                                    placeholder="Nuevo correo" type="text">
+                                                <ng-container class="invalid"
+                                                    *ngIf="ctrlCorreo.errors?.['required'] && ctrlCorreo.touched">
+                                                    <small class="tx-danger">Campo requerido</small>
+                                                </ng-container>
+                                                <ng-container class="invalid"
+                                                    *ngIf="ctrlCorreo.errors?.['email'] && ctrlCorreo.touched">
+                                                    <small class="tx-danger">Correo no válido</small>
+                                                </ng-container>
+                                            </div>
+                                            <div class="form-group mt-3">
+                                                <mat-slide-toggle class="subtitulo-reencorr"
+                                                    (change)="changeSlider($event)">
+                                                    Modificar correo
+                                                </mat-slide-toggle>
+                                            </div>
+                                            <div class="col-12 text-center mt-1">
+                                                <button type="button" class="btn btn-primary pull-end button-width-ini"
+                                                    (click)="Reenviar()" awNextStep>
+                                                    Enviar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aw-wizard-step>
+                            </aw-wizard>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>54545454</div>

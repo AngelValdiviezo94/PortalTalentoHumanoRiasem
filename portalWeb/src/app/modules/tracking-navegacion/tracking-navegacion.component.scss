@@ -1,0 +1,38 @@
+table {
+    width: 100%;
+}
+
+/* header grid color */
+.mat-header-cell {
+    flex-direction: column;
+    text-align: center !important;
+    background-color: #FE5A00;
+    // font-weight: 900;
+    color: white;
+    font-size: 100%;
+    border-right: solid 2px;
+    // border-style: solid;
+    // border-width: 2px;
+    // border-color: rgb(78, 76, 76);
+}
+
+/* color icono sort mattable*/
+::ng-deep .mat-sort-header-arrow {
+    color: white;
+}
+
+/* centrar texto columnas header */
+:host ::ng-deep .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* centrar texto rows */
+th.mat-header-cell,
+td.mat-cell {
+    text-align: center;
+}
+
+.mat-column-colaborador {
+    width: 30%;
+}

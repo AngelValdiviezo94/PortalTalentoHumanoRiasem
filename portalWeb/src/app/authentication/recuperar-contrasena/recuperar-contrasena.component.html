@@ -1,0 +1,177 @@
+<div class="page">
+  <div class="page-single">
+    <div class="container">
+      <div class="card">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 card-sigin-main mx-auto my-auto py-4 justify-content-center">
+          <div class="main justify-content-center align-items-center d-block">
+            <h3 style="color:#FE5A00">Restablece tu contraseña</h3>
+            <aw-wizard [disableNavigationBar]="true" [navBarLayout]="'large-empty-symbols'">
+              <aw-wizard-step [stepTitle]="'PASO 1'" [navigationSymbol]="{ symbol: '1' }">
+                <form [formGroup]="firstFormGroup" novalidate>
+                  <h6 class="font-weight-normal mb-4 text-center mt-4">Ingresa tu número de identificación.</h6>
+                  <div class="row text-center d-block">
+                    <div class="group-btn text-center">
+                      <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input class="form-control"
+                          type="text" [minlength]="10" [maxlength]="10"
+                          (input)="myMethod(identificacion.value)"
+                          #identificacion formControlName="identificacion">
+                      </div>
+                    </div>
+                  </div>
+
+                  <ng-container class="invalid"
+                    *ngIf="firstFormGroup.get('identificacion')?.hasError('required') && firstFormGroup.get('identificacion')?.touched">
+                    <small class="tx-danger">Identificación requerida</small>
+                  </ng-container>
+
+                  <ng-container class="invalid" *ngIf="!documentoValido && tipoDocumento === 'c'">
+                    <small class="tx-danger">Identificación no válida</small>
+                  </ng-container>
+
+                  <!-- <ng-container class="invalid"
+                    *ngIf="!firstFormGroup?.valid && firstFormGroup.get('identificacion')?.touched">
+                    <small class="tx-danger">Identificación no válida</small>
+                  </ng-container> -->
+
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary pull-right" [disabled]="!valido" awNextStep
+                      (click)="valido=false;reenviar=false">
+                      <!-- Cambiar a false -->
+                      Siguiente
+                    </button>
+                  </div>
+
+                </form>
+              </aw-wizard-step>
+              <aw-wizard-step [stepTitle]="'PASO 2'" [navigationSymbol]="{ symbol: '2' }">
+                <div class="row text-center d-block mt-2">
+                  <p>
+                    Pronto podrás reestablecer tu contraseña, hemos enviado un código, vía SMS a tu número celular {{colaborador.celular}} y a tu correo electrónico {{colaborador.correo}}
+                  </p>
+                  <div class="group-btn text-center mt-2">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                      <ngx-otp-input [config]="otpInputConfig" (otpChange)="handeOtpChange($event)" (fill)="handleFillEvent($event)">
+                      </ngx-otp-input>
+                    </div>
+                  </div>
+                </div>
+                <div class="container mt-2">
+                  <div class="contador" *ngIf="reenviar==false">
+                    <cd-timer id="timer-countercallback1" class="tx-26 mb-0" format="intelli" [startTime]="120"
+                      [countdown]="true" (onComplete)="onComplete($event)" (onTick)="onTick($event)"
+                      (onStart)="onStart($event)"></cd-timer>
+                  </div>
+                  <div class="contador" *ngIf="reenviar==true">
+                    <button class="btn text-white" (click)="reenviarOtp()">Reenviar</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-primary pull-right" [disabled]="!valido"
+                    (click)="valido=false" awNextStep>
+                    Siguiente
+                  </button>
+                </div>
+              </aw-wizard-step>
+              <aw-wizard-completion-step [stepTitle]="'PASO 3'" [navigationSymbol]="{ symbol: '3' }">
+                <form [formGroup]="fourthFormGroup" novalidate>
+                  <div class="form-group">
+                    <label class="form-control-label">¿Cuál quieres que sea tu contraseña?</label>
+                    <!-- <input class="form-control" required id="contrasena" name="contrasena" type="password"
+                      formControlName="contrasena" placeholder="Contraseña" #contrasena> -->
+                    <div class="input-group mb-3">
+                      <input aria-describedby="basic-addon2" required id="contrasena" name="contrasena"
+                        class="form-control" placeholder="Contraseña" [type]="ocultar ? 'password' : 'text'"
+                        formControlName="contrasena" #contrasena>
+                      <span class="input-group-text" (click)="mostrarPassword()"
+                        style="background: #FFFFFF; cursor: pointer;">
+                        <i *ngIf="ocultar" class="fa fa-eye"></i>
+                        <i *ngIf="!ocultar" class="fa fa-eye-slash"></i>
+                      </span>
+                    </div>
+
+                    <div></div>
+                    <label class="col justify-content-start text-center align-items-center d-flex"
+                      [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                      <i class="material-icons">
+                        {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                        fourthFormGroup.controls['contrasena'].hasError('minlength') ? 'cancel' :
+                        'check_circle' }}
+                      </i>
+                      Mínimo 10 caracteres
+                    </label>
+
+                    <label class="col justify-content-start text-center align-items-center d-flex"
+                      [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                      <i class="material-icons">
+                        {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                        fourthFormGroup.controls['contrasena'].hasError('hasNumber') ? 'cancel' :
+                        'check_circle' }}
+                      </i>
+                      Debe contener un número
+                    </label>
+
+                    <label class="col justify-content-start text-center align-items-center d-flex"
+                      [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+                      <i class="material-icons">
+                        {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                        fourthFormGroup.controls['contrasena'].hasError('hasCapitalCase') ? 'cancel' :
+                        'check_circle' }}
+                      </i>
+                      1 mayúscula
+                    </label>
+
+                    <label class="col justify-content-start text-center align-items-center d-flex"
+                      [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+                      <i class="material-icons">
+                        {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                        fourthFormGroup.controls['contrasena'].hasError('hasSmallCase') ? 'cancel' :
+                        'check_circle' }}
+                      </i>
+                      1 minúscula
+                    </label>
+
+                    <label class="col justify-content-start text-center align-items-center d-flex"
+                      [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+                      <i class="material-icons">
+                        {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                        fourthFormGroup.controls['contrasena'].hasError('hasSpecialCharacters') ? 'cancel' :
+                        'check_circle' }}
+                      </i>
+                      1 caracter especial
+                    </label>
+                    <div></div>
+                    <label class="form-control-label">Ingresala otra vez</label>
+                    <!-- <input class="form-control" required id="confirmarcontrasena" name="confirmarcontrasena"
+                      type="password" formControlName="confirmarcontrasena" placeholder="Confirmar contraseña"> -->
+                    <div class="input-group mb-3">
+                      <input required id="confirmarcontrasena" aria-describedby="basic-addon2"
+                        name="confirmarcontrasena" class="form-control" [type]="ocultar1 ? 'password' : 'text'"
+                        formControlName="confirmarcontrasena" placeholder="Confirmar contraseña">
+                      <span class="input-group-text" (click)="mostrarPassword1()"
+                        style="background: #FFFFFF; cursor: pointer;">
+                        <i *ngIf="ocultar1" class="fa fa-eye"></i>
+                        <i *ngIf="!ocultar1" class="fa fa-eye-slash"></i>
+                      </span>
+                    </div>
+
+                  </div>
+                  <label class="text-danger"
+                    *ngIf="fourthFormGroup.controls['confirmarcontrasena'].hasError('NoPassswordMatch')">
+                    Contraseña no coincide
+                  </label>
+                </form>
+                <button class="btn btn-primary pull-right" type="button" [disabled]="!fourthFormGroup.valid" (click)="finish(contrasena.value)"
+                  >Finalizar</button>
+
+              </aw-wizard-completion-step>
+            </aw-wizard>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

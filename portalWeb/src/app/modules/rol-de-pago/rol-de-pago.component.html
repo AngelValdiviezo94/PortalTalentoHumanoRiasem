@@ -1,0 +1,114 @@
+<div class="container text-center justify-content-center align-items-center d-flex">
+  <div class="row">
+    <div class="col-sm-12" id="htmlData">
+      <div class="pdf-body">
+        <table ALIGN="center" class="default">
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td><b>Fecha: </b>15-02-2023</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td><b>Mes:</b> 2023-1</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <h1>ROL DE PAGO</h1>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><b>Corte del {{rol.cabeceraRol.periodo}}</b></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>Compañía: </b>{{rol.cabeceraRol.empresa}}</td>
+            <td><b>División: </b>{{rol.cabeceraRol.division}}</td>
+            <td><b>Sucursal: </b>{{rol.cabeceraRol.sucursal}}</td>
+          </tr>
+          <tr>
+
+            <td colspan="3">
+              <h2>{{rol.cabeceraRol.apellidos}} {{rol.cabeceraRol.nombres}}</h2>
+            </td>
+
+          </tr>
+          <tr>
+            <td><b>Tipo Nómina </b>{{rol.cabeceraRol.tipoNomina}}</td>
+            <td><b>Proceso </b>{{rol.cabeceraRol.proceso}}</td>
+            <td><b>Periodo </b>{{rol.cabeceraRol.periodo}}</td>
+          </tr>
+          <tr>
+            <td><b>Área </b>{{rol.cabeceraRol.area}}</td>
+            <td><b>CCosto </b>{{rol.cabeceraRol.centroCosto}}</td>
+            <td><b>SCosto </b>{{rol.cabeceraRol.subCentroCosto}}</td>
+          </tr>
+          <tr>
+            <td><b>Cargo </b>{{rol.cabeceraRol.cargo}}</td>
+            <td><b>Sueldo </b>{{rol.cabeceraRol.sueldo}}</td>
+            <td><b>Forma Pago </b>{{rol.cabeceraRol.tipoPago}}</td>
+          </tr>
+        </table>
+        <div class="row">
+          <div class="col-sm-6">
+            <table BORDER class="text-center justify-content-center align-items-center">
+              <TR>
+                <TH COLSPAN=3>INGRESOS</TH>
+              </TR>
+              <TR>
+                <th></th>
+                <th>Cant</th>
+                <th>Valor</th>
+              </TR>
+              <TR *ngFor="let item of rol.listaIngresos">
+                <TD>{{item.descripcion}}</TD>
+                <TD>{{item.cantidad}}</TD>
+                <TD>{{item.valor}}</TD>
+              </TR>
+              <TR>
+                <TD></TD>
+                <TD>Total Ingresos:</TD>
+                <TD>{{rol.totalIngresos}}</TD>
+              </TR>
+            </table>
+          </div>
+          <div class="col-sm-6">
+            <table BORDER class="text-center justify-content-center align-items-center">
+              <TR>
+                <TH COLSPAN=3>EGRESOS</TH>
+              </TR>
+              <TR>
+                <th></th>
+                <th>Cant</th>
+                <th>Valor</th>
+              </TR>
+              <TR *ngFor="let item of rol.listaEgresos">
+                <TD>{{item.descripcion}}</TD>
+                <TD>{{item.cantidad}}</TD>
+                <TD>{{item.valor}}</TD>
+              </TR>
+              <TR>
+                <TD></TD>
+                <TD>Total Egresos:</TD>
+                <TD>{{rol.totalEgresos}}</TD>
+              </TR>
+            </table>
+          </div>
+          <table>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>Neto a pagar: {{rol.netoPagar}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m-5">
+  <button class="btn btn-success btn-block" (click)="openPDF()">Descargar Rol</button>
+</div>

@@ -1,0 +1,114 @@
+<div class="mt-2">
+  <div class="page-single">
+    <div class="container">
+      <div class="card">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 card-sigin-main mx-auto my-auto py-4 justify-content-center">
+          <div class="main justify-content-center align-items-center d-block">
+            <h3 style="color:#FE5A00">Cambio de contraseña</h3>
+            <p>Te recomendamos usar una contraseña segura y que no uses para ningún otro sitio.</p>
+            <p>Introduce a continuación tu contraseña actual para poder crear una nueva.</p>
+            <form [formGroup]="fourthFormGroup" novalidate>
+              <div class="form-group">
+                <label class="form-control-label">Ingresa contraseña</label>
+                <div class="input-group mb-3">
+                  <input required id="contrasenaActual" aria-describedby="basic-addon2"
+                    name="contrasenaActual" class="form-control" [type]="ocultar2 ? 'password' : 'text'"
+                    formControlName="contrasenaActual" placeholder="Ingresa tu contraseña actual">
+                  <span class="input-group-text" (click)="mostrarPassword2()"
+                    style="background: #FFFFFF; cursor: pointer;">
+                    <i *ngIf="ocultar2" class="fa fa-eye"></i>
+                    <i *ngIf="!ocultar2" class="fa fa-eye-slash"></i>
+                  </span>
+                </div>
+                <label class="form-control-label">Ingresa tu nueva contraseña</label>
+                <div class="input-group mb-3">
+                  <input aria-describedby="basic-addon2" required id="contrasena" name="contrasena"
+                    class="form-control" placeholder="Ingresa la nueva contraseña con que iniciarás sesión." [type]="ocultar ? 'password' : 'text'"
+                    formControlName="contrasena" #contrasena>
+                  <span class="input-group-text" (click)="mostrarPassword()"
+                    style="background: #FFFFFF; cursor: pointer;">
+                    <i *ngIf="ocultar" class="fa fa-eye"></i>
+                    <i *ngIf="!ocultar" class="fa fa-eye-slash"></i>
+                  </span>
+                </div>
+
+                <div>
+
+                </div>
+                <label class="col justify-content-start text-center align-items-center d-flex"
+                  [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('minlength')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">
+                    {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                    fourthFormGroup.controls['contrasena'].hasError('minlength') ? 'cancel' :
+                    'check_circle' }}
+                  </i>
+                  Mínimo 10 caracteres
+                </label>
+
+                <label class="col justify-content-start text-center align-items-center d-flex"
+                  [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasNumber')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">
+                    {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                    fourthFormGroup.controls['contrasena'].hasError('hasNumber') ? 'cancel' :
+                    'check_circle' }}
+                  </i>
+                  Debe contener un número
+                </label>
+
+                <label class="col justify-content-start text-center align-items-center d-flex"
+                  [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasCapitalCase')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">
+                    {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                    fourthFormGroup.controls['contrasena'].hasError('hasCapitalCase') ? 'cancel' :
+                    'check_circle' }}
+                  </i>
+                  1 mayúscula
+                </label>
+
+                <label class="col justify-content-start text-center align-items-center d-flex"
+                  [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasSmallCase')  ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">
+                    {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                    fourthFormGroup.controls['contrasena'].hasError('hasSmallCase') ? 'cancel' :
+                    'check_circle' }}
+                  </i>
+                  1 minúscula
+                </label>
+
+                <label class="col justify-content-start text-center align-items-center d-flex"
+                  [ngClass]="fourthFormGroup.controls['contrasena'].hasError('required') || fourthFormGroup.controls['contrasena'].hasError('hasSpecialCharacters') ? 'text-danger' : 'text-success'">
+                  <i class="material-icons">
+                    {{ fourthFormGroup.controls['contrasena'].hasError('required') ||
+                    fourthFormGroup.controls['contrasena'].hasError('hasSpecialCharacters') ? 'cancel' :
+                    'check_circle' }}
+                  </i>
+                  1 caracter especial
+                </label>
+                <div></div>
+                <label class="form-control-label">Confirma tu nueva contraseña</label>
+                <!-- <input class="form-control" required id="confirmarcontrasena" name="confirmarcontrasena"
+                  type="password" formControlName="confirmarcontrasena" placeholder="Confirmar contraseña"> -->
+                <div class="input-group mb-3">
+                  <input required id="confirmarcontrasena" aria-describedby="basic-addon2"
+                    name="confirmarcontrasena" class="form-control" [type]="ocultar1 ? 'password' : 'text'"
+                    formControlName="confirmarcontrasena" placeholder="Ingresa la misma contraseña del campo anterior.">
+                  <span class="input-group-text" (click)="mostrarPassword1()"
+                    style="background: #FFFFFF; cursor: pointer;">
+                    <i *ngIf="ocultar1" class="fa fa-eye"></i>
+                    <i *ngIf="!ocultar1" class="fa fa-eye-slash"></i>
+                  </span>
+                </div>
+
+              </div>
+              <label class="text-danger"
+                *ngIf="fourthFormGroup.controls['confirmarcontrasena'].hasError('NoPassswordMatch')">
+                Contraseña no coincide
+              </label>
+            </form>
+            <button class="btn btn-primary pull-right" type="button" (click)="cambiarContrasena()" [disabled]="!fourthFormGroup.valid">Guardar<i class="fas fa-save m-1"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="page">
+    <div class="page-single">
+        <div class="container">
+            <div class="row">
+                <div
+                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 card-sigin-main mx-auto my-auto py-4 justify-content-center">
+                    <div class="">
+                        <!-- Demo content-->
+                        <div class="main d-md-flex">
+                            <div class="wd-100p">
+                                <div class="text-center"><img
+                                        src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/LOGOENROLAPP_WEB.png"
+                                        class="sign-favicon ht-90" alt="logo"></div>
+                                <div class="">
+                                    <div class="main-signup-header">
+                                        <!-- <h2>Welcome back!</h2> -->
+                                        <!-- <h6 class="font-weight-semibold mb-4">Please sign in to continue.</h6> -->
+                                        <div class="panel panel-primary">
+                                            <div class="panel-body tabs-menu-body border-0 p-3">
+                                                <form [formGroup]="loginForm">
+                                                    <div class="form-group">
+
+                                                        <input class="form-control" placeholder="Cédula o Pasaporte"
+                                                            type="text" required="" formControlName="identificacion"
+                                                            #identificacion>
+                                                        <div *ngIf="loginForm.controls.identificacion?.touched && loginForm.controls.identificacion.errors?.required"
+                                                            class="text text-danger mt-1">
+                                                            Cédula o pasaporte requerido
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="form-group">
+                                                        <input class="form-control" placeholder="Contraseña"
+                                                            type="password" formControlName="password" #contrasena>
+                                                        <div *ngIf="loginForm.controls.password?.touched && loginForm.controls.password.errors?.required"
+                                                            class="text text-danger mt-1">
+                                                            Contraseña es requerida
+                                                        </div>
+                                                    </div> -->
+                                                    <div class="input-group mb-3">
+                                                        <input aria-describedby="basic-addon2" class="form-control"
+                                                            [type]="ocultar ? 'password' : 'text'"
+                                                            formControlName="password" #contrasena>
+                                                        <span class="input-group-text" (click)="mostrarPassword()"
+                                                            style="background: #FFFFFF; cursor: pointer;">
+                                                            <i *ngIf="ocultar" class="fa fa-eye"></i>
+                                                            <i *ngIf="!ocultar" class="fa fa-eye-slash"></i>
+                                                        </span>
+                                                    </div>
+                                                    <button class="btn btn-primary btn-block" autofocus
+                                                        [disabled]="!loginForm.valid"
+                                                        (click)="login(identificacion.value,contrasena.value)">Iniciar
+                                                        Sesión</button>
+                                                    <!-- <div class="mt-4 d-flex mx-auto text-center justify-content-center mb-2">
+                                                  <button (click)="loginGoogle()" class="btn btn-icon me-3" type="button">
+                                                      <span class="btn-inner--icon"> <i class="bx bxl-google tx-18 tx-prime"></i> </span>
+                                                  </button>
+                                                  <button (click)="loginFacebook()" class="btn btn-icon btn-facebook me-3" type="button">
+                                                      <span class="btn-inner--icon"> <i class="bx bxl-facebook tx-18 tx-prime"></i> </span>
+                                                  </button>
+                                                  <button (click)="loginTwitter()" class="btn btn-icon me-3" type="button">
+                                                      <span class="btn-inner--icon"> <i class="bx bxl-twitter tx-18 tx-prime"></i> </span>
+                                                  </button>
+                                                  <button class="btn  btn-icon me-3" type="button">
+                                                      <span class="btn-inner--icon"> <i class="bx bxl-instagram tx-18 tx-prime"></i> </span>
+                                                  </button>
+                                              </div> -->
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="main-signin-footer text-center mt-3">
+                                            <p>¿No tienes cuenta? <a routerLink="/formulario">Crear cuenta</a></p>
+                                            <p><a routerLink="/recuperar-contrasena" class="mb-3">Recuperar
+                                              contraseña</a></p>
+                                        </div>
+                                        <div class="main-signin-footer text-center mt-3">
+                                          <p style="font-size: 10 !important;">
+                                            Versión: {{version}}
+                                          </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 card-sigin-main mx-auto my-auto py-4 justify-content-center">
+                    <div class="card-sigin">
+
+                        <div class="main d-md-flex">
+                            <div class="wd-100p">
+                                <div class="">
+                                    <div class="main-card-signup-header">
+                                        <h1>¡Hola!</h1>
+                                        <h3>Estás a un paso de vivir la experiencia</h3>
+                                        <div class=""><img
+                                                src="https://imagenes.enrolapp.ec/Archivos/Riasem/imagenes/LOGOENROLAPP_WEB.png"
+                                                class="sign-favicon ht-auto" alt="logo"></div>
+                                        <!-- <h6 class="font-weight-semibold mb-4">Please sign in to continue.</h6> -->
+                                        <div class="panel panel-primary">
+                                            <div class="panel-body tabs-menu-body border-0 p-3">
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

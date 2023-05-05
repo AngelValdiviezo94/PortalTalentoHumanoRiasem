@@ -1,0 +1,255 @@
+<div class="col-xl-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <div class="">
+        <form class="example-form">
+          <div class="row">
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" color="warn">
+                <mat-label>UDN</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboUdn" [matAutocomplete]="auto">
+                <button *ngIf="!isControlEmpty('UDN')" (click)="limpiarControl('UDN')" type="button" mat-icon-button
+                  matSuffix>
+                  <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                  <mat-option *ngFor="let option of filteredUdn | async" [value]="option"
+                    [matTooltip]="option.descripcion" matTooltipPosition="after" matTooltipShowDelay="1000"
+                    (onSelectionChange)="onSelectionUdn(option, $event)">
+                    {{option.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" color="warn">
+                <mat-label>ÁREA</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboArea" [matAutocomplete]="auto1">
+                <button *ngIf="!isControlEmpty('ARE')" (click)="limpiarControl('ARE')" type="button" mat-icon-button
+                  matSuffix>
+                  <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto1="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                  <mat-option *ngFor="let option of filteredArea | async" [value]="option"
+                    [matTooltip]="option.descripcion" matTooltipPosition="after" matTooltipShowDelay="1000"
+                    (onSelectionChange)="onSelectionArea(option, $event)">
+                    {{option.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" color="warn">
+                <mat-label>SUBCENTRO COSTO</mat-label>
+                <input type="text" matInput [formControl]="ctrlComboScc" [matAutocomplete]="auto2">
+                <button *ngIf="!isControlEmpty('SCC')" (click)="limpiarControl('SCC')" type="button" mat-icon-button
+                  matSuffix>
+                  <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                  <mat-option *ngFor="let option of filteredScc | async" [value]="option"
+                    [matTooltip]="option.descripcion" matTooltipPosition="after" matTooltipShowDelay="1000"
+                    (onSelectionChange)="onSelectionScc(option)">
+                    {{option.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width" appearance="outline" color="warn">
+                <mat-label>TURNO</mat-label>
+                <input type="text" matInput [formControl]="eventocontrol" [matAutocomplete]="auto3">
+                <button *ngIf="!isControlEmpty('TUR')" (click)="limpiarControl('TUR')" type="button" mat-icon-button
+                  matSuffix>
+                  <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="mostrarTextoCombo">
+                  <mat-option *ngFor="let options2 of filteredOptions2 | async" [value]="options2"
+                    [matTooltip]="options2.descripcion" matTooltipPosition="after" matTooltipShowDelay="1000">
+                    {{options2.descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width" appearance="outline" color="warn">
+                <mat-label>COLABORADOR</mat-label>
+                <input type="text" matInput [formControl]="colaboradorcontrol" autocomplete="off">
+                <button *ngIf="!isControlEmpty('COL')" (click)="limpiarControl('COL')" type="button" mat-icon-button
+                  matSuffix>
+                  <mat-icon style="font-size: 16px;">close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <div class="row">
+                <mat-form-field appearance="outline" color="warn">
+                  <mat-label>DESDE</mat-label>
+                  <input matInput [matDatepicker]="picker" [formControl]="desdecontrol" #desde>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <ng-container class="invalid" *ngIf="desdecontrol.hasError('required') && desdecontrol?.touched">
+                    <small class="tx-danger">Campo requerido</small>
+                  </ng-container>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline" color="warn">
+                <mat-label>HASTA</mat-label>
+                <input matInput [matDatepicker]="picker1" [formControl]="hastacontrol" #hasta>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <ng-container class="invalid" *ngIf="hastacontrol.hasError('required') && hastacontrol?.touched">
+                  <small class="tx-danger">Campo requerido</small>
+                </ng-container>
+              </mat-form-field>
+            </div>
+            <div class="col-sm botones">
+              <button class="btn btn-primary" type="button" matTooltipPosition="above" matTooltip="Buscar"
+                (click)="consultarMarcacion(desde.value,hasta.value)">
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+              <button *ngIf="isAtrGenerarActive" class="btn btn-success" type="button" matTooltipPosition="above" matTooltip="Exportar"
+                (click)="exportExcel()">
+                <i class="fa fa-file-excel" aria-hidden="true"></i>
+              </button>
+              <button *ngIf="isAtrGenerarActive" class="btn btn-warning" type="button" matTooltipPosition="above" matTooltip="Generar txt"
+                (click)="download()">
+                <i class="fa fa-file" aria-hidden="true"></i>
+              </button>
+              <button *ngIf="isAtrTxtActive" class="btn btn-info" type="button" matTooltipPosition="above" matTooltip="Generar txt especial"
+                (click)="downloadEspecial()">
+                <i class="fa fa--solid fa-wheelchair" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <section class="example-container mat-elevation-z8" tabindex="0">
+          <table id="tabla-marcacion" mat-table [dataSource]="dataSource" cdkDropList
+            cdkDropListOrientation="horizontal" (cdkDropListDropped)="drop($event)" class="mat-elevation-z8" matSort
+            multiTemplateDataRows>
+            <ng-container matColumnDef="udn">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="udn">
+                UDN
+              </th>
+              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.udn}} </td>
+            </ng-container>
+            <ng-container matColumnDef="cedula">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="cedula">
+                CÉDULA
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nombre">
+              <th class="mat-sort-header" mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="nombre">
+                DATOS COLABORADOR
+              </th>
+              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.nombre}} <button
+                  mat-icon-button aria-label="expand row"
+                  (click)="(expandedElement = expandedElement === element ? null : element);$event.stopPropagation()">
+                  <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+                  <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+                </button> </td>
+            </ng-container>
+            <ng-container matColumnDef="codigo">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="codigo">
+                CÓDIGO
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="area">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="area">
+                ÁREA
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+            </ng-container>
+            <ng-container matColumnDef="subcentroCosto">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="subcentroCosto">
+                SUB CENTRO COSTO
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.subcentroCosto}} </td>
+            </ng-container>
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="fecha">
+                FECHA
+              </th>
+              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.fecha}} </td>
+            </ng-container>
+            <ng-container matColumnDef="hora">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="hora">
+                HORA
+              </th>
+              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.hora}} </td>
+              <!-- [ngClass]="{'color-entrada': (element.evento=='ENTRADA'), 'color-salida': (element.evento=='SALIDA'),'color-retorno-lunch': (element.evento=='ENTRADA AL RECESO'),'color-salida-lunch': (element.evento=='SALIDA AL RECESO')}" -->
+            </ng-container>
+            <ng-container matColumnDef="evento">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="evento">
+                EVENTO
+              </th>
+              <td mat-cell *matCellDef="let element"
+                [ngClass]="{'color-entrada': (element.evento=='ENTRADA'), 'color-salida': (element.evento=='SALIDA'),'color-retorno-lunch': (element.evento=='RETORNO DEL LUNCH'),'color-salida-lunch': (element.evento=='SALIDA AL LUNCH')}"
+                (click)="$event.stopPropagation()">
+                {{element.evento}} </td>
+            </ng-container>
+            <ng-container matColumnDef="novedad">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="novedad">
+                NOVEDAD
+              </th>
+              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.novedad}} </td>
+            </ng-container>
+            <ng-container matColumnDef="minutos">
+              <th mat-header-cell *matHeaderCellDef cdkDrag mat-sort-header="minutos">
+                MINUTOS NOVEDAD
+              </th>
+              <td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()"> {{element.minutos_novedad}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="example-element-detail"
+                  [@detailExpand]="element == expandedElement ? 'colaborador' : 'collapsed'">
+                  <div class="descripcion">
+                    <div class="row">
+                      <div class="campo">
+                        Cédula: {{element.cedula}}
+                      </div>
+                      <div class="campo">
+                        Código: {{element.codigo}}
+                      </div>
+                      <div class="campo">
+                        Área: {{element.area}}
+                      </div>
+                      <div class="campo">
+                        Sub centro de costo: {{element.subcentroCosto}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+              [class.example-expanded-row]="expandedElement === element"
+              (click)="expandedElement = expandedElement === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="10">No se encontró información</td>
+            </tr>
+          </table>
+        </section>
+        <mat-paginator [pageSizeOptions]="[10, 30, 50, 100]" aria-label="Seleccionar página de registros"
+          showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

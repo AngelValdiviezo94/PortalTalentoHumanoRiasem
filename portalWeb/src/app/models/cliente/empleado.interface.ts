@@ -1,0 +1,30 @@
+export interface Empleado {
+    id: string;
+    codigoEmpleado: number;
+    tipoIdentificacion: string;
+    identificacion: string;
+    nombres: string;
+    apellidos: string;
+    empresa: string;
+    cargo: string;
+    codEmpresa: string;
+    fechaIngreso: Date;
+    area: string;
+    rucEmpresa: string;
+    grupoEmpresarial: string;
+    correo: string;
+    sueldo: number;
+    tipoContrato: string;
+    dispositivoId: string;
+    latitudLocalidad: number;
+    longitudLocalidad: number;
+    empresaPanacea: string;
+    areaPanacea: string;
+    cargoPanacea: string;
+    codigoConvivencia: number;
+    codUdn: string;
+    codArea: string;
+    codScc: string;
+    direccion:string;
+    celular:string;
+}

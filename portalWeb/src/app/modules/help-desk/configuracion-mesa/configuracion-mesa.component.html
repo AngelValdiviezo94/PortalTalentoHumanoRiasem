@@ -1,0 +1,101 @@
+<div class="col-xl-12">
+  <div class="card">
+    <div class="card-header pb-0">
+      <form class="example-form">
+        <div class="card custom-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="background: orange;">
+                <div class="taskListBox">
+                  <ul id="taskList">
+                      <li class="task"  *ngFor='let op of listadoMesa'>
+
+                          <span class="taskText">{{ op.nombreComercial }}</span>
+                      </li>
+                  </ul>
+              </div>
+              </div>
+
+              <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="text-align: -webkit-center; min-height: 450px; border: rgba(234, 243, 241, 0.2784313725) 6px solid;">
+                <br/>
+
+                <div class="row">
+                  <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8" >
+                    <input style="width: 100%;" class="form-control" placeholder="Nombre" type="text">
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <input style="width: 100%;" class="form-control" placeholder="Código" type="text">
+                  </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                  <mat-form-field appearance="outline" color="warn">
+                    <textarea matInput class="form-control" maxlength="300" [formControl]="descripcionTxt" style="resize: none;"
+                      placeholder="Descripcion" rows="3"></textarea>
+                    <mat-hint align="end">{{descripcionTxt.value?.length}} / 300</mat-hint>
+                  </mat-form-field>
+                  <ng-container class="invalid" *ngIf="!descripcionTxt.valid">
+                    <small class="tx-danger">Cantidad de caracteres excedido</small>
+                  </ng-container>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                  <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8" >
+                    <input style="width: 100%;" class="form-control" placeholder="UDN" type="text">
+                  </div>
+                  <div class="col-sm-4 col-md-4 col-lg-4 col-xl-4" >
+                    <input style="width: 100%;" class="form-control" placeholder="Área" type="text">
+                  </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                  <div class="col-sm-8 col-md-8 col-lg-8 col-xl-8" >
+                    <mat-form-field appearance="outline" color="warn">
+                      <mat-label>Fecha inicio</mat-label>
+                      <input matInput [matDatepicker]="picker" [formControl]="desdecontrol" #desde>
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <ng-container class="invalid" *ngIf="desdecontrol.hasError('required') && desdecontrol?.touched">
+                        <small class="tx-danger">Campo requerido</small>
+                      </ng-container>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-3 col-md-3 col-lg-3 col-xl-3" style="margin: 11px auto;" >
+                    <label class="">
+                      <!-- <input name="estadoMesa" type="radio" (value)="estadoMesaValor" [(ngModel)]="estadoMesaValor" (click)="changeEstado()"> -->
+                      <mat-checkbox class="tp-margin" [(ngModel)] = "estadoMesaValor" (click)="changeEstado()">Estado: {{estadoMesa}}</mat-checkbox>
+                      <!-- <span class="mx-2">Estado: {{estadoMesa}}</span> -->
+                    </label>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4" style="text-align: -webkit-center; min-height: 450px; background: blue">
+                <div style="width: 100%;">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" style="background: yellow;">
+                <div style="padding-top: 2px;">
+
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6" style="text-align: -webkit-center; min-height: 450px; background: purple">
+              <div style="width: 100%;">
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
